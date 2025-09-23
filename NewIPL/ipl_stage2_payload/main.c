@@ -1,5 +1,6 @@
 #include <pspsdk.h>
 #include <syscon.h>
+#include <comms.h>
 #include "gpio.h"
 #ifdef DEBUG
 #include <uart.h>
@@ -42,7 +43,7 @@ int main()
 #endif
     
     *(u32 *) 0x8FB0000 = -1;
-    syscon_issue_command_read(0x07, (u32 *) 0x8FB0000);
+    syscon_issue_command_read(0x07, (u8 *) 0x8FB0000);
 
     Dcache();
     Icache();

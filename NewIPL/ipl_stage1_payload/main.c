@@ -2,10 +2,12 @@
 #include <string.h>
 #include <ark.h>
 
-#include "sysreg.h"
-#include "kirk.h"
-#include "syscon.h"
-#include "gpio.h"
+#include <sysreg.h>
+#include <kirk.h>
+#include <syscon.h>
+#include <comms.h>
+#include <fat.h>
+#include <gpio.h>
 
 #ifdef DEBUG
 #include "printf.h"
@@ -228,7 +230,7 @@ int unlockSyscon()
 {
     kirk_hwreset();
 
-    kirkF(0xBFC00C00);
+    kirkF((void*)0xBFC00C00);
     
     u8 random_key[16];
     u8 random_key_dec_resp_dec[16];
@@ -341,11 +343,11 @@ void boot150()
     int res = MsFatOpen("/TM/DCARK/150/msipl.raw");
 
     if (res == 0){
-        MsFatRead(0x40c0000, 0x4000);
+        MsFatRead((void*)0x40c0000, 0x4000);
         MsFatClose();
         Dcache();
         Icache();
-        return ((int (*)()) 0x40c0000)();
+        ((int (*)()) 0x40c0000)();
     }
 }
 #endif
@@ -371,7 +373,7 @@ int main()
         _sw(0x20040420, 0xbfc00ffc);
 
 #ifndef MSIPL
-    uint32_t keys = -1;
+    unsigned keys = -1;
     syscon_get_digital_key(&keys);
     if ((keys & SYSCON_CTRL_LTRIGGER) == 0)
     {
@@ -382,7 +384,7 @@ int main()
         int res = MsFatOpen("/TM/DCARK/msipl.raw");
 
         if (res == 0){
-        	MsFatRead(0x40c0000, 0x4000);
+        	MsFatRead((void*)0x40c0000, 0x4000);
         	MsFatClose();
         	Dcache();
         	Icache();
@@ -393,7 +395,7 @@ int main()
 
 #if IPL_01G
     int wakeup_factor;
-    syscon_get_wakeup_factor(&wakeup_factor);
+    syscon_get_wakeup_factor((void*)&wakeup_factor);
 
     if ((wakeup_factor & 0x80) == 0) {
 
