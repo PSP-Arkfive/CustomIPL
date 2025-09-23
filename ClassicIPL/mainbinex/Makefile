@@ -1,6 +1,6 @@
 PSPSDK=$(shell psp-config --pspsdk-path)
-INCDIR = $(PSPSDK)/include $(ARKROOT)/common/include $(ARKROOT)/loader/rebootex
-LIBS = -lansic -L $(ARKROOT)/libs
+INCDIR = $(PSPSDK)/include $(ARKSDK)/include $(BOOTLOADEX)
+LIBS = -lansic -L $(ARKSDK)/libs
 TARGET = patch.bin
 
 all: $(TARGET)
@@ -27,5 +27,5 @@ $(TARGET): main.elf
 clean:
 	$(Q)rm -rf *~ *.s *.o *.elf nand_payloadex.bin nand_payloadex.h $(TARGET) $(EXTRA_CLEAN)
 
-include $(ARKROOT)/common/make/global.mak
-include $(ARKROOT)/common/make/beauty_bin.mak
+
+include $(ARKSDK)/build-tools/beauty_bin.mak

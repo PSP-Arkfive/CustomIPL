@@ -1,14 +1,14 @@
-.PHONY: all nand_payloadex cipl
+.PHONY: all nand_payloadex new_cipl classic_cipl
 
 ARKSDK ?= $(CURDIR)/../ark-dev-sdk
 BOOTLOADEX ?= $(CURDIR)/../BootLoadEx
 
-all: nand_payloadex cipl
+all: nand_payloadex new_cipl classic_cipl
 
 nand_payloadex:
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" -C $(BOOTLOADEX)/nand_payloadex/
 
-cipl:
+new_cipl:
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=01G -C NewIPL
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=02G -C NewIPL
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=03G -C NewIPL
@@ -17,8 +17,14 @@ cipl:
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=07G -C NewIPL
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=09G -C NewIPL
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=11G -C NewIPL
-#	$(Q)$(MAKE) -C Installer
+
+classic_cipl:
+	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/mainbinex
+	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/combine
+
 
 clean:
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" -C $(BOOTLOADEX)
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C NewIPL clean
+	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/mainbinex clean
+	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/combine clean

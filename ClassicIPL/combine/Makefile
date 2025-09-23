@@ -1,11 +1,12 @@
 MODULE_PATH = ..
+RESOURCES ?= ../../Resources
 
 PYTHON=$(shell which python3)
 
 all:
-	$(PYTHON) $(ARKROOT)/contrib/PC/ipltools/combine.py $(ARKROOT)/contrib/PSP/IPL/ipl_header_01g.bin ../mainbinex/patch.bin ipl_block_01g.bin
-	$(PYTHON) $(ARKROOT)/contrib/PC/ipltools/combine.py -l 0x24000 $(ARKROOT)/contrib/PSP/IPL/ipl_header_02g.bin ../mainbinex/patch.bin ipl_block_02g.bin
-	$(PYTHON) $(ARKROOT)/contrib/PC/ipltools/combine.py -l 0x5000 -k $(ARKROOT)/contrib/PSP/IPL/kbooti_header_01g.bin ../mainbinex/patch.bin kbooti_ipl_block_01g.bin
+	$(PYTHON) $(ARKSDK)/build-tools/ipltools/combine.py $(RESOURCES)/ipl_header_01g.bin ../mainbinex/patch.bin ipl_block_01g.bin
+	$(PYTHON) $(ARKSDK)/build-tools/ipltools/combine.py -l 0x24000 $(RESOURCES)/ipl_header_02g.bin ../mainbinex/patch.bin ipl_block_02g.bin
+	$(PYTHON) $(ARKSDK)/build-tools/ipltools/combine.py -l 0x5000 -k $(RESOURCES)/kbooti_header_01g.bin ../mainbinex/patch.bin kbooti_ipl_block_01g.bin
 	bin2c ipl_block_01g.bin ipl_block_01g.h ipl_block_01g
 	bin2c ipl_block_02g.bin ipl_block_large.h ipl_block_large
 	bin2c kbooti_ipl_block_01g.bin $(MODULE_PATH)/kbooti_ipl_block_01g.h kbooti_ipl_block_01g
