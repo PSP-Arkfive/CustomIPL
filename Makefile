@@ -9,7 +9,7 @@ payloadex:
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" -C $(BOOTLOADEX)/nand_payloadex/
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" -C $(BOOTLOADEX)/ms_payloadex/
 
-cipl:
+cipl: payloadex
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/mainbinex
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/combine
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=01G -C NewIPL
@@ -21,7 +21,7 @@ cipl:
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=09G -C NewIPL
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=11G -C NewIPL
 
-msipl:
+msipl: payloadex
 	$(Q)$(MAKE) gcc -C MSIPL/minilzo
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C MSIPL/newipl/stage2
 	$(Q)$(MAKE) ARKSDK="$(ARKSDK)" BOOTLOADEX=$(BOOTLOADEX) -C MSIPL/mainbinex
