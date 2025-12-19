@@ -49,8 +49,10 @@ msipl:
 	$(Q)mv MSIPL/newipl/stage3/ipl_09G.bin MSIPL/newipl/msipl_09g.bin
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=11G -C MSIPL/newipl/stage3/
 	$(Q)mv MSIPL/newipl/stage3/ipl_11G.bin MSIPL/newipl/msipl_11g.bin
+	$(Q)$(MAKE) -C Installer
 	$(Q)mkdir -p dist/CustomIPL/
 	$(PY) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL.ARK package.txt -s
+	$(Q)cp Installer/EBOOT.PBP dist/CustomIPL/
 
 clean:
 	$(Q)$(MAKE) -C $(BOOTLOADEX)
@@ -62,5 +64,6 @@ clean:
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C MSIPL/newipl/stage1 clean
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C MSIPL/newipl/stage2 clean
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C MSIPL/newipl/stage3 clean
+	$(Q)$(MAKE) -C Installer clean
 	$(Q)rm -f MSIPL/newipl/msipl_*.bin
 	$(Q)rm -rf dist
