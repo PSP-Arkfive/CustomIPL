@@ -82,7 +82,7 @@ int ReadPkgFile()
         return fd;
 
     pkg_size = sceIoLseek(fd, 0, PSP_SEEK_END);
-    pkg_size = sceIoLseek(fd, 0, PSP_SEEK_SET);
+    sceIoLseek(fd, 0, PSP_SEEK_SET);
     
     if (pkg_size <= 0)
     {
@@ -507,14 +507,14 @@ int main()
 {
     SceUID kpspident;
 
+    pspDebugScreenInit();
+    pspDebugScreenSetTextColor(WHITE);
+    devkit = sceKernelDevkitVersion();
+
     int res = 0;
     if ((res=ReadPkgFile())<0){
         ErrorExit(5000, "Failed to read CIPL.ARK package: %d (%p)", res, res);
     }
-
-    pspDebugScreenInit();
-    pspDebugScreenSetTextColor(WHITE);
-    devkit = sceKernelDevkitVersion();
 
     // check if running 6.60 or 6.61
     if(devkit != 0x06060010 && devkit != 0x06060110) {

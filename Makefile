@@ -55,7 +55,7 @@ msipl:
 	$(Q)cp Installer/EBOOT.PBP dist/CustomIPL/
 
 clean:
-	$(Q)$(MAKE) -C $(BOOTLOADEX)
+	$(Q)$(MAKE) -C $(BOOTLOADEX) clean
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C NewIPL clean
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/mainbinex clean
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C ClassicIPL/combine clean
