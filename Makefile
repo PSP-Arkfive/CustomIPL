@@ -1,7 +1,9 @@
 .PHONY: all cipl msipl clean
 
+PY = $(shell which python3)
 PSPDEV = $(shell psp-config --pspdev-path)
 ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+BUILDTOOLS = $(ARKSDK)/build-tools
 BOOTLOADEX ?= $(CURDIR)/../BootLoadEx
 
 all: cipl msipl
@@ -47,6 +49,8 @@ msipl:
 	$(Q)mv MSIPL/newipl/stage3/ipl_09G.bin MSIPL/newipl/msipl_09g.bin
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) PSP_MODEL=11G -C MSIPL/newipl/stage3/
 	$(Q)mv MSIPL/newipl/stage3/ipl_11G.bin MSIPL/newipl/msipl_11g.bin
+	$(Q)mkdir -p dist/CustomIPL/
+	$(PY) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL.ARK package.txt -s
 
 clean:
 	$(Q)$(MAKE) -C $(BOOTLOADEX)
@@ -59,3 +63,4 @@ clean:
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C MSIPL/newipl/stage2 clean
 	$(Q)$(MAKE) BOOTLOADEX=$(BOOTLOADEX) -C MSIPL/newipl/stage3 clean
 	$(Q)rm -f MSIPL/newipl/msipl_*.bin
+	$(Q)rm -rf dist
