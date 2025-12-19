@@ -1,3 +1,7 @@
+PSPDEV = $(shell psp-config --pspdev-path)
+PSPSDK = $(shell psp-config --pspsdk-path)
+ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+
 RESOURCES ?= ../Resources
 
 ifeq ($(PSP_MODEL), 01G)

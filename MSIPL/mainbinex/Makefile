@@ -1,14 +1,16 @@
-PSPSDK=$(shell psp-config --pspsdk-path)
-INCDIR = $(PSPSDK)/include $(ARKSDK)/include $(BOOTLOADEX)
-LIBS = -lansic -L $(ARKSDK)/libs
+PSPDEV = $(shell psp-config --pspdev-path)
+PSPSDK = $(shell psp-config --pspsdk-path)
+ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+PYTHON = $(shell which python3)
 MAINBINEXDIR =  ../../ClassicIPL/mainbinex
-TARGET = patch.bin
 
-PYTHON=$(shell which python3)
+TARGET = patch.bin
 
 all: $(TARGET)
 
 CFLAGS = -std=c99 -Wall -Os -G0 -fno-pic $(addprefix -I, $(INCDIR)) -DMS_IPL
+INCDIR = $(PSPSDK)/include $(PSPSDK)/include/iplsdk $(BOOTLOADEX)
+LIBS = -lansic -L $(PSPSDK)/lib
 
 CC = psp-gcc
 LD = psp-ld

@@ -1,3 +1,8 @@
+PSPDEV = $(shell psp-config --pspdev-path)
+PSPSDK = $(shell psp-config --pspsdk-path)
+ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+PYTHON = $(shell which python3)
+
 ifeq ($(PSP_MODEL), 01G)
 XOR_VAL = 
 else

@@ -1,7 +1,11 @@
 PSPSDK=$(shell psp-config --pspsdk-path)
-INCDIR = $(PSPSDK)/include $(ARKSDK)/include $(BOOTLOADEX)
-LIBS = -lansic -L $(ARKSDK)/libs
+PSPDEV = $(shell psp-config --pspdev-path)
+ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+
 TARGET = patch.bin
+
+INCDIR = $(PSPSDK)/include $(BOOTLOADEX)
+LIBS = -lansic -L $(PSPSDK)/lib
 
 all: $(TARGET)
 

@@ -1,7 +1,10 @@
+PSPSDK=$(shell psp-config --pspsdk-path)
+PSPDEV = $(shell psp-config --pspdev-path)
+ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+PYTHON=$(shell which python3)
+
 MODULE_PATH = ..
 RESOURCES ?= ../../Resources
-
-PYTHON=$(shell which python3)
 
 all:
 	$(PYTHON) $(ARKSDK)/build-tools/ipltools/combine.py $(RESOURCES)/ipl_header_01g.bin ../mainbinex/patch.bin ipl_block_01g.bin
