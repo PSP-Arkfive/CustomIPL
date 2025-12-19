@@ -4,7 +4,7 @@ ARKSDK = $(PSPDEV)/share/ark-dev-sdk
 
 TARGET = patch.bin
 
-INCDIR = $(PSPSDK)/include $(BOOTLOADEX)
+INCDIR = $(PSPSDK)/include
 LIBS = -lansic -L $(PSPSDK)/lib
 
 all: $(TARGET)

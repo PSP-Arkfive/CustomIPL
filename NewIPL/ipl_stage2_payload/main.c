@@ -7,10 +7,10 @@
 #include <printf.h>
 #endif
 
-#ifdef MSIPL
-#include "ms_payloadex/ms_payloadex.h"
+#ifndef MS_IPL
+#include "../../Payloadex/Nand/payload.h"
 #else
-#include "nand_payloadex/nand_payloadex.h"
+#include "../../Payloadex/Ms/payload.h"
 #endif
 
 void Dcache();

@@ -7,9 +7,9 @@
 #include "cache.h"
 #include "seedkey.h"
 #ifndef MS_IPL
-#include "nand_payloadex/nand_payloadex.h"
+#include "../../Payloadex/Nand/payload.h"
 #else
-#include "ms_payloadex/ms_payloadex.h"
+#include "../../Payloadex/Ms/payload.h"
 #endif
 #define SYSCON_CTRL_HOME 0x00001000
 
