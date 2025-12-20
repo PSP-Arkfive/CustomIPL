@@ -292,15 +292,14 @@ void devtoolipl_menu(){
         ErrorExit(5000,"Failed to get kbooti!\n");
     }
 
-    void *kbooti_ipl_block_01g, *ipl_block;
-    size_t size_kbooti_ipl_block_01g;
+    void *ipl_block;
+    size_t size_ipl_block;
 
-    if (findPkgFile(&ipl_block, &size_kbooti_ipl_block_01g, "kbooti_ipl_01g.bin") < 0){
+    if (findPkgFile(&ipl_block, &size_ipl_block, "kbooti_ipl_01g.bin") < 0){
         ErrorExit(5000,"Failed to find file in pkg: kbooti_ipl_01g.bin\n");
     };
 
-    kbooti_ipl_block_01g = memalign(16, size_kbooti_ipl_block_01g);
-    memcpy(kbooti_ipl_block_01g, ipl_block, size_kbooti_ipl_block_01g);
+    memcpy(big_buf, ipl_block, size_ipl_block);
 
     printf("\nCustom kbooti Flasher for kbooti.\n\n\n");
 
@@ -338,7 +337,7 @@ void devtoolipl_menu(){
 
         if (pad.Buttons & PSP_CTRL_CROSS) {
         	printf("Flashing cKBOOTI...");
-        	if (pspKbootiUpdateKbooti(kbooti_ipl_block_01g, size_kbooti_ipl_block_01g) < 0)
+        	if (pspKbootiUpdateKbooti(big_buf, size_ipl_block) < 0)
         		ErrorExit(5000,"Failed to write kbooti!\n");
 
         	printf("Done.\n");
@@ -358,14 +357,13 @@ void devtoolipl_menu(){
 
         sceKernelDelayThread(10000);
     }
-    free(kbooti_ipl_block_01g);
     reboot = 1;
     ErrorExit(5000,"\nInstall complete. Restarting in 5 seconds...\n");
 }
 
 
 void newipl_menu(const char* config){
-    int size = NEW_CIPL_SIZE;
+    size_t size = NEW_CIPL_SIZE;
     u16 ipl_key = 0;
     u8 allow_classic_install = 0;
 
@@ -442,17 +440,14 @@ void newipl_menu(const char* config){
             if (findPkgFile(&ipl_data, &size, ipl_table[model]) < 0){
                 ErrorExit(5000,"Failed to find file in pkg: %s\n", ipl_table[model]);
             }
-
-            u8* ipl_block = memalign(16, size);
-            memcpy(ipl_block, ipl_data, size);
+            memcpy(big_buf, ipl_data, size);
 
         	if(pspIplUpdateClearIpl() < 0)
         		ErrorExit(5000,"Failed to clear IPL!\n");
 
-        	if (pspIplUpdateSetIpl(ipl_block, size, 0 ) < 0)
+        	if (pspIplUpdateSetIpl(big_buf, size, 0 ) < 0)
         		ErrorExit(5000,"Failed to write cIPL!\n");
 
-            free(ipl_block);
         	break; 
         } else if ( (pad.Buttons & PSP_CTRL_CIRCLE) ) {		
         	printf("Flashing original IPL...");
@@ -462,19 +457,15 @@ void newipl_menu(const char* config){
             if (findPkgFile(&ipl_data, &size, orig_ipl_table[model]) < 0){
                 ErrorExit(5000,"Failed to find file in pkg: %s\n", orig_ipl_table[model]);
             }
-
-            u8* ipl_block = memalign(16, size);
-            memcpy(ipl_block, ipl_data, size);
+            memcpy(big_buf, ipl_data, size);
 
         	if(pspIplUpdateClearIpl() < 0) {
         		ErrorExit(5000,"Failed to clear IPL!\n");
         	}
-
-        	if (pspIplUpdateSetIpl( ipl_block, size,  ipl_key) < 0) {
+        	if (pspIplUpdateSetIpl( big_buf, size,  ipl_key) < 0) {
         		ErrorExit(5000,"Failed to write IPL!\n");
         	}
             
-            free(ipl_block);
         	printf("Done.\n");
         	break;
         } else if ((pad.Buttons & PSP_CTRL_LTRIGGER) && allow_classic_install) {

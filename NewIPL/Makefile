@@ -33,4 +33,8 @@ all:
 
 clean:
 	$(Q)rm -f origipl_*.h cipl_*.h cipl_*.bin ipl_*.bin ipl_*.dec | true
+	$(Q)rm -f ipl_stage1_payload/*.o | true
+	$(Q)rm -f ipl_stage1_payload/*.bin | true
 	$(Q)rm -f ipl_stage2_payload/ipl_stage2_payload.h | true
+	$(Q)rm -f ipl_stage2_payload/*.o | true
+	$(Q)rm -f ipl_stage2_payload/*.bin | true

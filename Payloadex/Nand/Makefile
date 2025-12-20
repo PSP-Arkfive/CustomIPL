@@ -3,7 +3,7 @@ PSPDEV = $(shell psp-config --pspdev-path)
 PYTHON = $(shell which python3)
 ARKSDK = $(PSPDEV)/share/ark-dev-sdk
 
-TARGET = reboot.bin.gz
+TARGET = reboot.bin
 
 all: $(TARGET)
 
@@ -28,12 +28,11 @@ main.elf: $(C_OBJS)
 
 $(TARGET): main.elf
 	$(Q)$(STRIP) -s $<
-	$(Q)$(OBJCOPY) -O binary $< $(patsubst %.gz,%,$(TARGET))
-	$(Q)$(PYTHON) $(ARKSDK)/build-tools/gz/gz.py $(patsubst %.gz,%,$(TARGET)) $@
+	$(Q)$(OBJCOPY) -O binary $< $@
 	$(Q)bin2c $@ payload.h payloadex
 	@echo GET $@
 
 clean:
-	$(Q)rm -rf *~ *.s *.o *.elf reboot.bin reboot.bin.gz payload.h $(EXTRA_CLEAN)
+	$(Q)rm -rf *~ *.s *.o *.elf $(TARGET) payload.h $(EXTRA_CLEAN)
 
 include $(ARKSDK)/build-tools/beauty_bin.mak
