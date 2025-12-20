@@ -382,17 +382,17 @@ void newipl_menu(const char* config){
     };
 
     static char* orig_ipl_table[] = {
-        (char*)"origipl_01g.bin",
-        (char*)"origipl_02g.bin",
-        (char*)"origipl_03g.bin",
-        (char*)"origipl_04g.bin",
-        (char*)"origipl_05g.bin",
+        (char*)"ipl_01g.bin",
+        (char*)"ipl_02g.bin",
+        (char*)"ipl_03g.bin",
+        (char*)"ipl_04g.bin",
+        (char*)"ipl_05g.bin",
         (char*)NULL, // 6g
-        (char*)"origipl_07g.bin",
+        (char*)"ipl_07g.bin",
         (char*)NULL, // 8g
-        (char*)"origipl_09g.bin",
+        (char*)"ipl_09g.bin",
         (char*)NULL, // 10g
-        (char*)"origipl_11g.bin",
+        (char*)"ipl_11g.bin",
     };
 
     int supported_models = sizeof(ipl_table)/sizeof(ipl_table[0]);
