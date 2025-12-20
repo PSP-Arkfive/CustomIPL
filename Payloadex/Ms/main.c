@@ -19,12 +19,16 @@ ARKConfig _arkconf = {
     .recovery = 0,
 };
 
-ExtraIoFuncs iofuncs = {
-    .psp_io = {
-        .FatMount = &MsFatMount,
-        .FatOpen = &MsFatOpen,
-        .FatRead = &MsFatRead,
-        .FatClose = &MsFatClose,
+BootLoadExConfig bleconf = {
+    .boot_type = TYPE_PAYLOADEX,
+    .boot_storage = MS_BOOT,
+    .extra_io = {
+        .psp_io = {
+            .FatMount = &MsFatMount,
+            .FatOpen = &MsFatOpen,
+            .FatRead = &MsFatRead,
+            .FatClose = &MsFatClose,
+        }
     }
 };
 
@@ -46,7 +50,7 @@ int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7
     syscon_ctrl_ms_power(1);
 
     // Configure
-    bootConfig(MS_BOOT, TYPE_PAYLOADEX, &iofuncs);
+    configureBoot(&bleconf);
 
     // scan functions
     findBootFunctions();

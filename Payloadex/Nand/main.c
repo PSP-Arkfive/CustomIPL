@@ -19,6 +19,11 @@ ARKConfig _arkconf = {
     .recovery = 0,
 };
 
+BootLoadExConfig bleconf = {
+    .boot_type = TYPE_PAYLOADEX,
+    .boot_storage = FLASH_BOOT,
+};
+
 // Entry Point
 int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
 {
@@ -39,7 +44,7 @@ int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7
     memcpy(ark_config, &_arkconf, sizeof(ARKConfig));
 
     // Configure
-    bootConfig(FLASH_BOOT, TYPE_PAYLOADEX, NULL);
+    configureBoot(&bleconf);
 
     // scan functions
     findBootFunctions();
