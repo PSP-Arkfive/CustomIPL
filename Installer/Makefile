@@ -1,9 +1,9 @@
 PSPSDK=$(shell psp-config --pspsdk-path)
 
 TARGET = flasher
-OBJS = main.o pspIplUpdate.o kbooti_update.o kpspident.o stubkk.o
+OBJS = main.o stubkk.o
 
-LIBS = -lpspkubridge -lpspsystemctrl_user
+LIBS = -lpspkubridge -lpspsystemctrl_user -lpspIplUpdate -lpspKbootiUpdate -lkpspident
 INCDIR = $(ARKROOT)/common/include $(ARKROOT)/loader/perma/cipl/classic $(ARKROOT)/loader/perma/cipl/new
 LIBDIR = $(ARKROOT)/libs
 
