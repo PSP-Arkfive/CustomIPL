@@ -19,23 +19,22 @@ ARKConfig _arkconf = {
     .recovery = 0,
 };
 
-static ExtraIoFuncs ms_extra_io = {
-    .FatMount = &MsFatMount,
-    .FatOpen = &MsFatOpen,
-    .FatRead = &MsFatRead,
-    .FatClose = &MsFatClose,
+ExtraIoFuncs iofuncs = {
+    .psp_io = {
+        .FatMount = &MsFatMount,
+        .FatOpen = &MsFatOpen,
+        .FatRead = &MsFatRead,
+        .FatClose = &MsFatClose,
+    }
 };
 
 // Entry Point
 int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
 {
     #ifdef DEBUG
-    colorDebug(0xff00);
+    _sw(0x44000000, 0xBC800100);
+    colorDebug(0xFF00);
     #endif
-
-    is_msipl = 1;
-    is_payloadex = 1;
-    extra_io = &ms_extra_io;
 
     memcpy(ark_config, &_arkconf, sizeof(ARKConfig));
 
@@ -44,17 +43,16 @@ int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7
     __asm("sync"::);
     
     syscon_init();
-    
     syscon_ctrl_ms_power(1);
 
-    // check config
-    checkRebootConfig();
+    // Configure
+    bootConfig(MS_BOOT, TYPE_PAYLOADEX, &iofuncs);
 
-    // scan for reboot functions
-    findRebootFunctions();
+    // scan functions
+    findBootFunctions();
     
-    // patch reboot buffer
-    patchRebootBufferPSP();
+    // patch sceboot
+    patchBootPSP();
     
     // Forward Call
     return sceReboot(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
