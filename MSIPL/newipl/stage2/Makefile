@@ -19,4 +19,4 @@ PSPSDK=$(shell psp-config --pspsdk-path)
 include $(ARKSDK)/build-tools/build_ipl.mak
 
 clean:
-	$(Q)rm -f *.h *.bin *.dec *.o | true
+	$(Q)rm -f *.h *.bin *.dec *.o *.lzo | true
