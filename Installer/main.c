@@ -528,7 +528,7 @@ int main()
         ErrorExit(5000, "ERROR: installing cIPL over Infinity is risky, make sure you install DC-ARK first before doing this!");
     }
 
-    kpspident = pspSdkLoadStartModule("kpspident.prx", PSP_MEMORY_PARTITION_KERNEL);
+    kpspident = pspSdkLoadStartModule("ms0:/PSP/LIBS/kpspident.prx", PSP_MEMORY_PARTITION_KERNEL);
 
     if (kpspident < 0) {
         ErrorExit(5000, "kpspident.prx loaded failed\n");
