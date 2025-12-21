@@ -9,7 +9,7 @@ TARGET = patch.bin
 all: $(TARGET)
 
 CFLAGS = -std=c99 -Wall -Os -G0 -fno-pic $(addprefix -I, $(INCDIR)) -DMS_IPL
-INCDIR = $(PSPSDK)/include $(PSPSDK)/include/iplsdk $(BOOTLOADEX)
+INCDIR = $(PSPSDK)/include $(PSPSDK)/include/iplsdk
 LIBS = -lansic -L $(PSPSDK)/lib
 
 CC = psp-gcc

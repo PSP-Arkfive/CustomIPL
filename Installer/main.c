@@ -509,16 +509,16 @@ int main()
 
     // check if running 6.60 or 6.61
     if(devkit != 0x06060010 && devkit != 0x06060110) {
-	int check_dcark = sceIoDopen("ms0:/TM/DCARK");
-	if(check_dcark<0) {
-        	ErrorExit(5000,"DCARK MISSING, INSTALL IT FIRST!\n");
-	}
-	else {
-		sceIoDclose(check_dcark);
-		pspDebugScreenPrintf("After install your PSP will be 'bricked', turn on holding LT ( Left Trigger ) to boot DCARK\n");
-		sceKernelDelayThread(4*1000*1000);
-		pspDebugScreenClear();
-	}
+        int check_dcark = sceIoDopen("ms0:/TM/DCARK");
+        if(check_dcark<0) {
+                ErrorExit(5000,"DCARK MISSING, INSTALL IT FIRST!\n");
+        }
+        else {
+            sceIoDclose(check_dcark);
+            pspDebugScreenPrintf("After install your PSP will be 'bricked', turn on holding LT ( Left Trigger ) to boot DCARK\n");
+            sceKernelDelayThread(4*1000*1000);
+            pspDebugScreenClear();
+        }
     }
 
     // check if running infinity

@@ -6,7 +6,7 @@ TARGET = ipl_stage2_payload
 EXTRA_TARGETS = ipl_stage2_payload.h
 OBJS = crt0.o main.o
 
-INCDIR = $(PSPSDK)/include $(PSPSDK)/include/iplsdk $(BOOTLOADEX)
+INCDIR = $(PSPSDK)/include $(PSPSDK)/include/iplsdk
 CFLAGS = -Os -G0 -Wall -std=c99 -fno-pic $(BFLAGS) -fdata-sections -ffunction-sections -Wl,--gc-sections
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti 
 ASFLAGS = $(CFLAGS)
