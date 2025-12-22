@@ -139,6 +139,7 @@ void loadIplUpdateModule(){
 
     if (mod == 0x80020139) return; // SCE_ERROR_KERNEL_EXCLUSIVE_LOAD
 
+    if (mod < 0) mod = sceKernelLoadModule("ms0:/PSP/LIBS/ipl_update.prx", 0, NULL); // retry from LIBS folder
     if (mod < 0) {
         ErrorExit(5000,"Could not load ipl_update.prx!\n");
     }
@@ -276,6 +277,7 @@ void devtoolipl_menu(){
     //load module
     mod = sceKernelLoadModule(KBOOTI_UPDATE_PRX, 0, NULL);
 
+    if (mod < 0) mod = sceKernelLoadModule("ms0:/PSP/LIBS/" KBOOTI_UPDATE_PRX, 0, NULL);
     if (mod < 0) {
         ErrorExit(5000,"Could not load " KBOOTI_UPDATE_PRX "!\n");
     }
@@ -528,8 +530,8 @@ int main()
         ErrorExit(5000, "ERROR: installing cIPL over Infinity is risky, make sure you install DC-ARK first before doing this!");
     }
 
-    kpspident = pspSdkLoadStartModule("ms0:/PSP/LIBS/kpspident.prx", PSP_MEMORY_PARTITION_KERNEL);
-
+    kpspident = pspSdkLoadStartModule("kpspident.prx", PSP_MEMORY_PARTITION_KERNEL);
+    if (kpspident < 0) kpspident = pspSdkLoadStartModule("ms0:/PSP/LIBS/kpspident.prx", PSP_MEMORY_PARTITION_KERNEL); // retry from LIBS folder
     if (kpspident < 0) {
         ErrorExit(5000, "kpspident.prx loaded failed\n");
     }
