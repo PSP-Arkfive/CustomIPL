@@ -123,9 +123,6 @@ int UnpackBootConfigDummy(char **p_buffer, int length){
 // Entry Point
 int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
 {
-    #ifdef DEBUG
-    colorDebug(0xff00);
-    #endif
 
     u32 ctrl = _lw(BOOT_KEY_BUFFER);
 
