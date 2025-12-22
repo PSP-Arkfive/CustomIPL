@@ -7,7 +7,7 @@
 
 #include "cache.h"
 #include "seedkey.h"
-#ifndef MS_IPL
+#ifndef MSIPL
 #include "../../Payloadex/Nand/payload.h"
 #else
 #include "../../Payloadex/Ms/payload.h"
@@ -89,7 +89,7 @@ void patchMainBin(void)
 void _arkBoot() __attribute__ ((section (".text.startup")));
 void _arkBoot()
 {
-#ifdef MS_IPL
+#ifdef MSIPL
     patchMainBin();
 #else
     MAKE_JUMP(0x040EC2C8, patchMainBin); // Redirect jump to main.bin
