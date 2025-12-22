@@ -3,6 +3,7 @@
 
 #include <ark.h>
 #include <cfwmacros.h>
+#include <bootloadex.h>
 
 #include "cache.h"
 #include "seedkey.h"
