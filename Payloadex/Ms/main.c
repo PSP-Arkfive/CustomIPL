@@ -9,7 +9,6 @@
 #include <fat.h>
 #include <syscon.h>
 
-#define REG32(addr) *((volatile uint32_t *)(addr))
 
 ARKConfig arkconf = {
     .magic = ARK_CONFIG_MAGIC,
@@ -47,9 +46,9 @@ BootLoadExConfig bleconf = {
             .FatOpen = &MsFatOpen,
             .FatRead = &MsFatRead,
             .FatClose = &MsFatClose,
-            .UnpackBootConfig = &UnpackBootConfigArkPSP, //&UnpackBootConfigDummy
         }
-    }
+    },
+    .UnpackBootConfig = &UnpackBootConfigArkPSP, //&UnpackBootConfigDummy
 };
 
 
