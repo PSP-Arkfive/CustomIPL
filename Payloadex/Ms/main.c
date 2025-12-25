@@ -19,21 +19,6 @@ ARKConfig arkconf = {
     .recovery = 0,
 };
 
-int UnpackBootConfigDummy(char **p_buffer, int length){
-    int result = length;
-    int newsize;
-    char *buffer;
-
-    result = (*UnpackBootConfig)(*p_buffer, length);
-    buffer = (void*)BOOTCONFIG_TEMP_BUFFER;
-    memcpy(buffer, *p_buffer, length);
-    *p_buffer = buffer;
-
-
-
-    return result;
-}
-
 
 BootLoadExConfig bleconf = {
     .boot_type = TYPE_PAYLOADEX,
