@@ -152,7 +152,7 @@ void classicipl_menu(){
     char* ipl_file = (model == 0)? "ipl_classic_01g.bin" : "ipl_classic_02g.bin";
 
     if (findPkgFile(&ipl_block, &size_ipl_block, ipl_file) < 0){
-        ErrorExit(5000,"Failed to find file in pkg: %s\n", ipl_file);
+        ErrorExit(5000,"Failed to find file in pkg: %s", ipl_file);
     }
 
     size_ipl_block_large = 0x4000+size_ipl_block;
@@ -164,14 +164,14 @@ void classicipl_menu(){
     size = pspIplUpdateGetIpl(big_buf);
 
     if(size < 0) {
-        ErrorExit(5000,"Failed to get IPL!\n");
+        ErrorExit(5000,"Failed to get IPL!");
     }
 
     int ipl_type = 0;
     
     if (size > ORIG_IPL_MAX_SIZE){
         if( size == CLASSIC_CIPL_SIZE ) {
-        	setInfoMsg(INFO_MSG, "Custom IPL is installed\n");
+        	setInfoMsg(INFO_MSG, "Custom IPL is installed");
         	size -= 0x4000;
         	memmove(ipl_block_large + 0x4000 , big_buf + 0x4000 , size);
         	ipl_type = 1;
@@ -179,7 +179,7 @@ void classicipl_menu(){
         	return newipl_menu();
         }
     } else {
-        setInfoMsg(INFO_MSG, "Original IPL \n");
+        setInfoMsg(INFO_MSG, "Original IPL ");
         memmove(ipl_block_large + 0x4000, big_buf, size);
     }
     
@@ -191,34 +191,34 @@ void classicipl_menu(){
         	setInfoMsg(INFO_MSG, "Flashing cIPL...");
 
         	if(pspIplUpdateClearIpl() < 0)
-        		ErrorExit(5000,"Failed to clear IPL!\n");
+        		ErrorExit(5000,"Failed to clear IPL!");
 
         	if (pspIplUpdateSetIpl(ipl_block_large, size+0x4000, 0 ) < 0)
-        		ErrorExit(5000,"Failed to write cIPL!\n");
+        		ErrorExit(5000,"Failed to write cIPL!");
 
-        	setInfoMsg(INFO_MSG, "Done.\n");
+        	setInfoMsg(INFO_MSG, "Done.");
         	break; 
         } else if ( (pad.Buttons & PSP_CTRL_CIRCLE) && ipl_type ) {		
         	setInfoMsg(INFO_MSG, "Flashing IPL...");
 
         	if(pspIplUpdateClearIpl() < 0) {
-        		ErrorExit(5000,"Failed to clear IPL!\n");
+        		ErrorExit(5000,"Failed to clear IPL!");
         	}
 
         	if (pspIplUpdateSetIpl( ipl_block_large + 0x4000 , size, 0 ) < 0) {
-        		ErrorExit(5000,"Failed to write IPL!\n");
+        		ErrorExit(5000,"Failed to write IPL!");
         	}
 
-        	setInfoMsg(INFO_MSG, "Done.\n");
+        	setInfoMsg(INFO_MSG, "Done.");
         	break; 
         } else if (pad.Buttons & PSP_CTRL_RTRIGGER) {
-        	NormalExit(2000,"Cancelled by user.\n");
+        	NormalExit(2000,"Cancelled by user.");
         }
 
         sceKernelDelayThread(10000);
     }
     free(ipl_block_large);
-    RebootExit(5000,"\nInstall complete. Restarting in 5 seconds...\n");
+    RebootExit(5000,"Install complete. Restarting in 5 seconds...");
 }
 
 void devtoolipl_menu(){
