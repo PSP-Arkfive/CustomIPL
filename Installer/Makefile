@@ -1,9 +1,9 @@
 PSPSDK=$(shell psp-config --pspsdk-path)
 
-TARGET = flasher
-OBJS = main.o stubkk.o
+TARGET = cipl_flasher
+OBJS = main.o flasher.o stubkk.o
 
-LIBS = -lpspkubridge -lpspsystemctrl_user -lpspIplUpdate -lpspKbootiUpdate -lkpspident
+LIBS = -lmini2d -lpng -lz -lpspgu -lpspgum -lpspkubridge -lpspsystemctrl_user -lpspIplUpdate -lpspKbootiUpdate -lkpspident
 INCDIR = $(ARKROOT)/common/include $(ARKROOT)/loader/perma/cipl/classic $(ARKROOT)/loader/perma/cipl/new
 LIBDIR = $(ARKROOT)/libs
 
@@ -12,8 +12,9 @@ CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = cIPL Flasher
-PSP_EBOOT_ICON = ICON0.PNG
+PSP_EBOOT_TITLE = ARK cIPL Flasher
+PSP_EBOOT_ICON = res/icon0.png
+PSP_EBOOT_PIC1 = res/pic1.png
 PSP_FW_VERSION = 660
 BUILD_PRX = 1
 
