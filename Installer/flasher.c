@@ -41,10 +41,6 @@ size_t pkg_size = 0;
 
 int devkit, baryon_ver;
 
-void classicipl_menu();
-void devtoolipl_menu();
-void newipl_menu();
-
 
 int findPkgFile(void** buffer, size_t* size, const char* path){
     u32 nfiles = *(u32*)(pkg_data);

@@ -37,6 +37,9 @@ extern char* cipl_type;
 extern char** options;
 extern int nopts;
 
+void classicipl_menu();
+void devtoolipl_menu();
+void newipl_menu();
 void cipl_flasher();
 
 void setInfoMsg(int type, char* txt);
