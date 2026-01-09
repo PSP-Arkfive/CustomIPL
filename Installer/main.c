@@ -92,7 +92,7 @@ int drawthread(SceSize args, void *argp){
         clearScreen(CLEAR_COLOR);
         
         blitAlphaImageToScreen(0, 0, 480, 272, background, 0, 0);
-        blitAlphaImageToScreen(0, 0, icon->imageWidth, icon->imageHeight, icon, 0, 0);
+        blitAlphaImageToScreen(0, 0, icon->imageWidth, icon->imageHeight, icon, 0, 272-icon->imageHeight);
 
         if (options != NULL && nopts > 0)
             drawMenu();
