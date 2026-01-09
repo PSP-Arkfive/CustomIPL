@@ -431,6 +431,9 @@ void cipl_flasher()
 
     devkit = sceKernelDevkitVersion();
 
+    SceIoStat dc_stat;
+    int has_dc = sceIoGetstat("ms0:/TM/DCARK/msipl.raw", &dc_stat)>=0;
+
     int res = 0;
     if ((res=ReadPkgFile())<0){
         ErrorExit(5000, "Failed to read CIPL.ARK package: %d (%p)", res, res);
@@ -438,22 +441,18 @@ void cipl_flasher()
 
     // check if running 6.60 or 6.61
     if(devkit != 0x06060010 && devkit != 0x06060110) {
-        int check_dcark = sceIoDopen("ms0:/TM/DCARK");
-        if(check_dcark<0) {
-                ErrorExit(5000,"DCARK MISSING, INSTALL IT FIRST!");
+        if(!has_dc) {
+            ErrorExit(5000,"DCARK MISSING, INSTALL IT FIRST!");
         }
         else {
-            sceIoDclose(check_dcark);
             setInfoMsg(WARNING_MSG, "After install your PSP will be 'bricked', turn on holding LT (Left Trigger) to boot DCARK");
             sceKernelDelayThread(4*1000*1000);
-            pspDebugScreenClear();
         }
     }
 
     // check if running infinity
     SceModule infinity_mod;
-    SceIoStat dc_stat;
-    if (kuKernelFindModuleByName("InfinityControl", &infinity_mod) == 0 && sceIoGetstat("ms0:/TM/DCARK/msipl.raw", &dc_stat)<0){
+    if (kuKernelFindModuleByName("InfinityControl", &infinity_mod) == 0 && !has_dc){
         ErrorExit(5000, "ERROR: installing cIPL over Infinity is risky, make sure you install DC-ARK first before doing this!");
     }
 
