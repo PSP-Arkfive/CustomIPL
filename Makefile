@@ -23,10 +23,10 @@ cipl:
 
 msipl:
 	$(Q)$(MAKE) -C Payloadex/Ms
-	$(Q)$(MAKE) gcc -C MSIPL/minilzo
+	$(Q)$(MAKE) gcc -C minilzo
 	$(Q)$(MAKE) -C MSIPL/newipl/stage2
 	$(Q)$(MAKE) -C MSIPL/mainbinex
-	$(Q)MSIPL/minilzo/testmini MSIPL/newipl/stage2/msipl.bin MSIPL/newipl/stage2/msipl.lzo
+	$(Q)minilzo/testmini MSIPL/newipl/stage2/msipl.bin MSIPL/newipl/stage2/msipl.lzo
 	$(Q)bin2c MSIPL/newipl/stage2/msipl.lzo MSIPL/newipl/stage1/msipl_compressed.h msipl_compressed
 	$(Q)$(MAKE) -C MSIPL/newipl/stage1
 	$(Q)$(PYTHON) $(ARKSDK)/build-tools/ipltools/make_ipl.py MSIPL/newipl/stage1/msipl.bin MSIPL/newipl/stage1/ipl.bin reset_block 0x4000000
@@ -59,7 +59,7 @@ clean:
 	$(Q)$(MAKE) -C NewIPL clean
 	$(Q)$(MAKE) -C ClassicIPL/mainbinex clean
 	$(Q)$(MAKE) -C ClassicIPL/combine clean
-	$(Q)$(MAKE) -C MSIPL/minilzo clean
+	$(Q)$(MAKE) -C minilzo clean
 	$(Q)$(MAKE) -C MSIPL/mainbinex clean
 	$(Q)$(MAKE) -C MSIPL/newipl/stage1 clean
 	$(Q)$(MAKE) -C MSIPL/newipl/stage2 clean

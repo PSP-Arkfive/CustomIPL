@@ -4,8 +4,8 @@ TARGET = cipl_flasher
 OBJS = main.o flasher.o
 
 LIBS = -lmini2d -lpng -lz -lpspgu -lpspgum -lpsppower -lpspkubridge -lpspsystemctrl_user -lpspIplUpdate -lpspKbootiUpdate -lkpspident
-INCDIR = $(ARKROOT)/common/include $(ARKROOT)/loader/perma/cipl/classic $(ARKROOT)/loader/perma/cipl/new
-LIBDIR = $(ARKROOT)/libs
+INCDIR = 
+LIBDIR = 
 
 CFLAGS = -O2 -G0 -Wall -fshort-wchar
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
