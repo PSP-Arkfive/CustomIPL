@@ -319,6 +319,10 @@ void prestage2()
 #ifdef SET_SEED_ADDRESS
     MAKE_CALL(SET_SEED_ADDRESS, set_seed);
 #endif
+
+#ifdef MSIPL
+    syscon_ctrl_ms_power(1);
+#endif
     
     Dcache();
     Icache();

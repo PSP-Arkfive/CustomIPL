@@ -1,12 +1,14 @@
-.PHONY: all cipl msipl clean
+.PHONY: all minilzo cipl msipl clean
 
 PY = $(shell which python3)
 PSPDEV = $(shell psp-config --pspdev-path)
 ARKSDK = $(PSPDEV)/share/ark-dev-sdk
 BUILDTOOLS = $(ARKSDK)/build-tools
 
-all: cipl msipl
+all: minilzo cipl msipl
 
+minilzo:
+	$(Q)$(MAKE) gcc -C minilzo
 
 cipl:
 	$(Q)$(MAKE) -C Payloadex/Nand
@@ -23,7 +25,6 @@ cipl:
 
 msipl:
 	$(Q)$(MAKE) -C Payloadex/Ms
-	$(Q)$(MAKE) gcc -C minilzo
 	$(Q)$(MAKE) -C MSIPL/newipl/stage2
 	$(Q)$(MAKE) -C MSIPL/mainbinex
 	$(Q)minilzo/testmini MSIPL/newipl/stage2/msipl.bin MSIPL/newipl/stage2/msipl.lzo

@@ -26,6 +26,7 @@ all:
 	$(Q)dd if=$(NEWIPL)/ipl_stage1_payload/ipl_stage1_payload.bin of=ipl_$(PSP_MODEL).bin
 	$(Q)$(PYTHON) $(ARKSDK)/build-tools/ipltools/unpack_ipl.py $(RESOURCES)/nandipl_$(PSP_MODEL).bin ipl_$(PSP_MODEL).dec $(XOR_VAL)
 	$(Q)dd if=ipl_$(PSP_MODEL).dec of=ipl_$(PSP_MODEL).bin bs=1 seek=49152
+	$(Q)cp $(NEWIPL)/ipl_stage2_payload/ipl_stage2_payload.bin ipl_stage2_payload_$(PSP_MODEL).bak  
 	$(Q)$(MAKE) clean -C $(NEWIPL)/ipl_stage2_payload
 	$(Q)$(MAKE) clean -C $(NEWIPL)/ipl_stage1_payload
 	$(Q)rm ipl_$(PSP_MODEL).dec

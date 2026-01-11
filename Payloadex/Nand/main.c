@@ -7,20 +7,9 @@
 #include <bootloadex_ark.h>
 #include <pspbtcnf.h>
 
-#include <fat.h>
 #include <syscon.h>
+#include <comms.h>
 
-// ARK files
-#define PATH_SYSTEMCTRL FLASH0_PATH "kd/ark_systemctrl.prx"
-#define PATH_PSPCOMPAT FLASH0_PATH "kd/ark_pspcompat.prx"
-#define PATH_VITACOMPAT FLASH0_PATH "kd/ark_vitacompat.prx"
-#define PATH_VITAPOPS FLASH0_PATH "kd/ark_vitapops.prx"
-#define PATH_VSHCTRL FLASH0_PATH "kd/ark_vshctrl.prx"
-#define PATH_STARGATE FLASH0_PATH "kd/ark_stargate.prx"
-#define PATH_INFERNO FLASH0_PATH "kd/ark_inferno.prx"
-#define PATH_POPCORN FLASH0_PATH "kd/ark_popcorn.prx"
-
-#define REG32(addr) *((volatile uint32_t *)(addr))
 
 ARKConfig arkconf = {
     .magic = ARK_CONFIG_MAGIC,
@@ -44,6 +33,9 @@ BootLoadExConfig bleconf = {
 // Entry Point
 int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
 {
+
+    *(u32 *) 0x8FB0000 = -1;
+    syscon_issue_command_read(0x07, (u8 *) 0x8FB0000);
 
     u32 ctrl = _lw(BOOT_KEY_BUFFER);
 

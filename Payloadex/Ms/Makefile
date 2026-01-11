@@ -29,10 +29,11 @@ main.elf: $(C_OBJS)
 $(TARGET): main.elf
 	$(Q)$(STRIP) -s $<
 	$(Q)$(OBJCOPY) -O binary $< $@
-	$(Q)bin2c $@ payload.h payloadex
+	$(Q)../../minilzo/testmini $(TARGET) payload.lzo
+	$(Q)bin2c payload.lzo payload.h payloadex
 	@echo GET $@
 
 clean:
-	$(Q)rm -rf *~ *.s *.o *.elf $(TARGET) payload.h $(EXTRA_CLEAN)
+	$(Q)rm -rf *~ *.s *.o *.elf *.lzo $(TARGET) payload.h $(EXTRA_CLEAN)
 
 include $(ARKSDK)/build-tools/beauty_bin.mak

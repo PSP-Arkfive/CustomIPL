@@ -11,7 +11,7 @@ CFLAGS = -Os -G0 -Wall -std=c99 -fno-pic $(BFLAGS) -fdata-sections -ffunction-se
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti 
 ASFLAGS = $(CFLAGS)
 
-LIBS = -liplsdk
+LIBS = -lmicrolz
 LIBDIR = $(PSPSDK)/lib
 LDFLAGS = -nostartfiles  -T linkfile.l -fdata-sections -ffunction-sections -Wl,--gc-sections
 
