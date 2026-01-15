@@ -9,7 +9,7 @@
 #include <psppower.h>
 #include <pspsyscon.h>
 
-#include <ark.h>
+#include <systemctrl_ark.h>
 #include <cfwmacros.h>
 #include <systemctrl.h>
 #include <kubridge.h>

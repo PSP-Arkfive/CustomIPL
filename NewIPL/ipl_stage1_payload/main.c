@@ -2,7 +2,7 @@
 
 #include <pspsdk.h>
 
-#include <ark.h>
+#include <systemctrl_ark.h>
 #include <cfwmacros.h>
 #include <sysreg.h>
 #include <kirk.h>

@@ -3,7 +3,7 @@
 #include <pspgu.h>
 #include <psppower.h>
 
-#include <ark.h>
+#include <systemctrl_ark.h>
 #include <rebootexconfig.h>
 #include <libpspexploit.h>
 #include <mini2d.h>
