@@ -1,6 +1,6 @@
 PSPDEV = $(shell psp-config --pspdev-path)
 PSPSDK = $(shell psp-config --pspsdk-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 
 TARGET = ipl_stage1_payload
 OBJS = crt0.o main.o
@@ -15,4 +15,4 @@ LIBDIR = $(PSPSDK)/lib
 LDFLAGS = -nostartfiles  -T linkfile.l -fdata-sections -ffunction-sections -Wl,--gc-sections
 
 PSPSDK=$(shell psp-config --pspsdk-path)
-include $(ARKSDK)/build-tools/build_ipl.mak
+include $(CFWSDK)/build-tools/build_ipl.mak

@@ -1,6 +1,6 @@
 PSPDEV = $(shell psp-config --pspdev-path)
 PSPSDK = $(shell psp-config --pspsdk-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 
 RESOURCES ?= ../Resources
 
@@ -22,10 +22,10 @@ endif
 all:
 	$(Q)$(MAKE) -C ipl_stage2_payload BFLAGS="-DIPL_$(PSP_MODEL) -DPSP_MODEL=$(PSP_MODEL)"
 	$(Q)$(MAKE) -C ipl_stage1_payload BFLAGS="-DIPL_$(PSP_MODEL) -DPSP_MODEL=$(PSP_MODEL)"
-	$(Q)$(PYTHON) $(ARKSDK)/build-tools/ipltools/unpack_ipl.py $(RESOURCES)/nandipl_$(PSP_MODEL).bin ipl_$(PSP_MODEL).dec $(XOR_VAL)
+	$(Q)$(PYTHON) $(CFWSDK)/build-tools/ipltools/unpack_ipl.py $(RESOURCES)/nandipl_$(PSP_MODEL).bin ipl_$(PSP_MODEL).dec $(XOR_VAL)
 	$(Q)dd if=ipl_stage1_payload/ipl_stage1_payload.bin of=ipl_$(PSP_MODEL).bin
 	$(Q)dd if=ipl_$(PSP_MODEL).dec of=ipl_$(PSP_MODEL).bin bs=1 seek=49152
-	$(Q)$(PYTHON) $(ARKSDK)/build-tools/ipltools/make_ipl.py ipl_$(PSP_MODEL).bin cipl_$(PSP_MODEL).bin reset_block 0x40e0000
+	$(Q)$(PYTHON) $(CFWSDK)/build-tools/ipltools/make_ipl.py ipl_$(PSP_MODEL).bin cipl_$(PSP_MODEL).bin reset_block 0x40e0000
 	$(Q)bin2c cipl_$(PSP_MODEL).bin cipl_$(PSP_MODEL).h cipl_$(PSP_MODEL)
 	$(Q)bin2c $(RESOURCES)/nandipl_$(PSP_MODEL).bin origipl_$(PSP_MODEL).h origipl_$(PSP_MODEL)
 	$(Q)$(MAKE) clean -C ipl_stage2_payload

@@ -2,8 +2,8 @@
 
 PY = $(shell which python3)
 PSPDEV = $(shell psp-config --pspdev-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
-BUILDTOOLS = $(ARKSDK)/build-tools
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
+BUILDTOOLS = $(CFWSDK)/build-tools
 
 all: minilzo cipl msipl
 
@@ -30,7 +30,7 @@ msipl:
 	$(Q)minilzo/testmini MSIPL/newipl/stage2/msipl.bin MSIPL/newipl/stage2/msipl.lzo
 	$(Q)bin2c MSIPL/newipl/stage2/msipl.lzo MSIPL/newipl/stage1/msipl_compressed.h msipl_compressed
 	$(Q)$(MAKE) -C MSIPL/newipl/stage1
-	$(Q)$(PYTHON) $(ARKSDK)/build-tools/ipltools/make_ipl.py MSIPL/newipl/stage1/msipl.bin MSIPL/newipl/stage1/ipl.bin reset_block 0x4000000
+	$(Q)$(PYTHON) $(CFWSDK)/build-tools/ipltools/make_ipl.py MSIPL/newipl/stage1/msipl.bin MSIPL/newipl/stage1/ipl.bin reset_block 0x4000000
 	$(Q)bin2c MSIPL/newipl/stage1/ipl.bin MSIPL/newipl/stage2/new_msipl.h new_msipl
 	$(Q)bin2c MSIPL/newipl/stage2/msipl.bin MSIPL/newipl/stage2/msipl_raw.h msipl_raw
 	$(Q)$(MAKE) PSP_MODEL=01G -C MSIPL/newipl/stage3/

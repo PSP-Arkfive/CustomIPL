@@ -1,5 +1,5 @@
 PSPSDK=$(shell psp-config --pspsdk-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 
 TARGET = msipl
 OBJS = crt0.o main.o
@@ -13,7 +13,7 @@ LIBS = -lmicrolz
 LIBDIR = $(PSPSDK)/lib
 LDFLAGS = -nostartfiles  -T linkfile.l -fdata-sections -ffunction-sections -Wl,--gc-sections
 
-include $(ARKSDK)/build-tools/build_ipl.mak
+include $(CFWSDK)/build-tools/build_ipl.mak
 
 clean:
 	$(Q)rm -f msipl_compressed.h *.bin *.dec *.o | true

@@ -1,6 +1,6 @@
 PSPDEV = $(shell psp-config --pspdev-path)
 PSPSDK = $(shell psp-config --pspsdk-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 PYTHON = $(shell which python3)
 
 ifeq ($(PSP_MODEL), 01G)
@@ -24,7 +24,7 @@ all:
 	$(Q)$(MAKE) -C $(NEWIPL)/ipl_stage2_payload BFLAGS="-DIPL_$(PSP_MODEL) -DPSP_MODEL=$(PSP_MODEL) -DMSIPL=1"
 	$(Q)$(MAKE) -C $(NEWIPL)/ipl_stage1_payload BFLAGS="-DIPL_$(PSP_MODEL) -DPSP_MODEL=$(PSP_MODEL) -DMSIPL=1"
 	$(Q)dd if=$(NEWIPL)/ipl_stage1_payload/ipl_stage1_payload.bin of=ipl_$(PSP_MODEL).bin
-	$(Q)$(PYTHON) $(ARKSDK)/build-tools/ipltools/unpack_ipl.py $(RESOURCES)/nandipl_$(PSP_MODEL).bin ipl_$(PSP_MODEL).dec $(XOR_VAL)
+	$(Q)$(PYTHON) $(CFWSDK)/build-tools/ipltools/unpack_ipl.py $(RESOURCES)/nandipl_$(PSP_MODEL).bin ipl_$(PSP_MODEL).dec $(XOR_VAL)
 	$(Q)dd if=ipl_$(PSP_MODEL).dec of=ipl_$(PSP_MODEL).bin bs=1 seek=49152
 	$(Q)$(MAKE) clean -C $(NEWIPL)/ipl_stage2_payload
 	$(Q)$(MAKE) clean -C $(NEWIPL)/ipl_stage1_payload

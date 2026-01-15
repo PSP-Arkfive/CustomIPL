@@ -1,6 +1,6 @@
 PSPSDK=$(shell psp-config --pspsdk-path)
 PSPDEV = $(shell psp-config --pspdev-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 
 TARGET = patch.bin
 
@@ -32,4 +32,4 @@ clean:
 	$(Q)rm -rf *~ *.s *.o *.elf nand_payloadex.bin nand_payloadex.h $(TARGET) $(EXTRA_CLEAN)
 
 
-include $(ARKSDK)/build-tools/beauty_bin.mak
+include $(CFWSDK)/build-tools/beauty_bin.mak

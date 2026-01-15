@@ -3,7 +3,7 @@ PSPSDK=$(shell psp-config --pspsdk-path)
 TARGET = cipl_flasher
 OBJS = main.o flasher.o
 
-LIBS = -lmini2d -lpng -lz -lpspgu -lpspgum -lpsppower -lpspkubridge -lpspsystemctrl_user -lpspIplUpdate -lpspKbootiUpdate -lkpspident
+LIBS = -lmini2d -lpng -lz -lpspgu -lpspgum -lpsppower -lpspkubridge -lpspsystemctrl_user -lpspiplupdate -lpspkbootiupdate -lkpspident
 INCDIR = 
 LIBDIR = 
 

@@ -1,6 +1,6 @@
 PSPDEV = $(shell psp-config --pspdev-path)
 PSPSDK = $(shell psp-config --pspsdk-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 
 TARGET = msipl
 OBJS = crt0.o main.o
@@ -16,7 +16,7 @@ LDFLAGS = -nostartfiles  -T linkfile.l -fdata-sections -ffunction-sections -Wl,-
 
 
 PSPSDK=$(shell psp-config --pspsdk-path)
-include $(ARKSDK)/build-tools/build_ipl.mak
+include $(CFWSDK)/build-tools/build_ipl.mak
 
 clean:
 	$(Q)rm -f *.h *.bin *.dec *.o *.lzo | true

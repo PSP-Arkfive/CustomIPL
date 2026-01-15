@@ -1,6 +1,6 @@
 PSPDEV = $(shell psp-config --pspdev-path)
 PSPSDK = $(shell psp-config --pspsdk-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 PYTHON = $(shell which python3)
 MAINBINEXDIR =  ../../ClassicIPL/mainbinex
 
@@ -30,7 +30,7 @@ main.elf: $(MAINBINEX_OBJS)
 $(TARGET): main.elf
 	$(Q)$(STRIP) -s $<
 	$(Q)$(OBJCOPY) -O binary $< $(TARGET)
-	$(Q)$(PYTHON) $(ARKSDK)/build-tools/ipltools/make_tm_ipl.py --input_payload $(TARGET) --payload_addr 0x040D6000 --ipl_addr 0x040EC000 --output payload.bin 
+	$(Q)$(PYTHON) $(CFWSDK)/build-tools/ipltools/make_tm_ipl.py --input_payload $(TARGET) --payload_addr 0x040D6000 --ipl_addr 0x040EC000 --output payload.bin 
 	$(Q)bin2c payload.bin payload.h ms_ipl_payload
 	@echo GET $@
 
@@ -38,4 +38,4 @@ clean:
 	$(Q)rm -rf *~ *.s *.o *.elf patch.bin payload.bin payload.h $(TARGET) $(EXTRA_CLEAN)
 
 
-include $(ARKSDK)/build-tools/beauty_bin.mak
+include $(CFWSDK)/build-tools/beauty_bin.mak

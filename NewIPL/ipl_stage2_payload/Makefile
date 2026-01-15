@@ -1,6 +1,6 @@
 PSPDEV = $(shell psp-config --pspdev-path)
 PSPSDK = $(shell psp-config --pspsdk-path)
-ARKSDK = $(PSPDEV)/share/ark-dev-sdk
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 
 TARGET = ipl_stage2_payload
 EXTRA_TARGETS = ipl_stage2_payload.h
@@ -19,4 +19,4 @@ ipl_stage2_payload.h: $(TARGET).bin
 	$(Q)bin2c $(TARGET).bin ipl_stage2_payload.h payload
 
 PSPSDK=$(shell psp-config --pspsdk-path)
-include $(ARKSDK)/build-tools/build_ipl.mak
+include $(CFWSDK)/build-tools/build_ipl.mak
