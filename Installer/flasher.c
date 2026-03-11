@@ -370,7 +370,7 @@ void newipl_menu(){
         sceCtrlReadBufferPositive(&pad, 1);
 
         if (pad.Buttons & PSP_CTRL_CROSS) {
-        	setInfoMsg(INFO_MSG, "Flashing Custom cIPL...");
+        	setInfoMsg(INFO_MSG, "Flashing Custom IPL...");
 
         	size = NEW_CIPL_SIZE;
             void* ipl_data = NULL;
