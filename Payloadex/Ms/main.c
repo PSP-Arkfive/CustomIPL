@@ -40,8 +40,8 @@ BootLoadExConfig bleconf = {
 int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
 {
 
-    *(u32 *) 0x8FB0000 = -1;
-    syscon_issue_command_read(0x07, (u8 *) 0x8FB0000);
+    *(u32 *) BOOT_KEY_BUFFER = -1;
+    syscon_issue_command_read(0x07, (u8 *) BOOT_KEY_BUFFER);
 
     memcpy(ark_config, &arkconf, sizeof(ARKConfig));
 
