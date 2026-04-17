@@ -13,8 +13,6 @@
 PSP_MODULE_INFO("ARK cIPL Flasher", 0x0800, 2, 0); 
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_VSH);
 
-static KernelFunctions _ktbl;
-KernelFunctions* k_tbl = &_ktbl;
 
 int working = 1;
 char* curtext = NULL;
