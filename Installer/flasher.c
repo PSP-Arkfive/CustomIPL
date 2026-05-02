@@ -455,7 +455,7 @@ void cipl_flasher()
     kpspident = pspSdkLoadStartModule("kpspident.prx", PSP_MEMORY_PARTITION_KERNEL);
     if (kpspident < 0) kpspident = pspSdkLoadStartModule("ms0:/PSP/LIBS/kpspident.prx", PSP_MEMORY_PARTITION_KERNEL); // retry from LIBS folder
     if (kpspident < 0) {
-        ErrorExit(5000, "kpspident.prx loaded failed");
+        ErrorExit(5000, "kpspident.prx load failed");
     }
 
     model = kuKernelGetModel();

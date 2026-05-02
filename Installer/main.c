@@ -6,19 +6,28 @@
 #include <systemctrl_ark.h>
 #include <rebootexconfig.h>
 #include <libpspexploit.h>
-#include <mini2d.h>
+#include <ya2d.h>
+#include <tinyfont.h>
+//#include <mini2d.h>
 
 #include "main.h"
 
 PSP_MODULE_INFO("ARK cIPL Flasher", 0x0800, 2, 0); 
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_VSH);
 
+#define CLEAR_COLOR 0x00000000
+#define WHITE_COLOR 0xFFFFFFFF
+#define RED_COLOR    0x000000FF
+#define GREEN_COLOR  0xFF00FF00
+#define YELLOW_COLOR 0x00FFFF00
 
 int working = 1;
 char* curtext = NULL;
 
-Image* background;
-Image* icon;
+//Image* background;
+//Image* icon;
+struct ya2d_texture* background;
+struct ya2d_texture* icon;
 
 char* cipl_type = NULL;
 char** options = NULL;
@@ -26,6 +35,8 @@ int nopts = 0;
 char msg[256];
 int msg_type = INFO_MSG;
 int msg_colors[] = { GREEN_COLOR, YELLOW_COLOR, RED_COLOR };
+
+extern u8 msx[];
 
 void setInfoMsg(int type, char* txt){
     msg_type = type;
@@ -56,13 +67,13 @@ void drawMenu(){
     u32 color = 0x80808000;
 
     // menu window
-    fillScreenRect(color, x, y, w, h);
+    ya2d_draw_rect(x, y, w, h, color, 1);
 
     if (cipl_type){
         int tl = strlen(cipl_type);
         int dx = ((w-8*tl)/2);
-        fillScreenRect(0x8000ff00, x+dx, y+5, 8*tl, 8);
-        printTextScreen(x + dx, y+5, cipl_type, WHITE_COLOR);
+        ya2d_draw_rect(x+dx, y+5, 8*tl, 8, 0x8000ff00, 1);
+        tinyFontPrintTextScreen(msx, x+dx, y+5, cipl_type, WHITE_COLOR, NULL);
     }
 
     // menu items
@@ -71,48 +82,49 @@ void drawMenu(){
     for (int i=0; i<nopts; i++){
         int tl = strlen(options[i]);
         cur_x = x + ((w-(8*tl))/2);
-        fillScreenRect(color&0x00FFFFFF, cur_x, cur_y+4, 8*tl, 8);
+        ya2d_draw_rect(cur_x, cur_y+4, 8*tl, 8, color&0x00FFFFFF, 1);
         if(i==0)
-            printTextScreen(cur_x, cur_y+4, options[i], WHITE_COLOR);
+            tinyFontPrintTextScreen( msx, cur_x, cur_y+4, options[i], WHITE_COLOR, NULL);
         else
-            printTextScreen(cur_x, cur_y+5, options[i], WHITE_COLOR);
+            tinyFontPrintTextScreen( msx, cur_x, cur_y+5, options[i], WHITE_COLOR, NULL);
         cur_y += 10;
     }
 
     if (msg[0]){
-        printTextScreen(480-8*strlen(msg), TOP+15, msg, msg_colors[msg_type]);
+        tinyFontPrintTextScreen(msx, 480-8*strlen(msg), TOP+15, msg, msg_colors[msg_type], NULL);
     }
 }
 
 int drawthread(SceSize args, void *argp){
     
     while (working){
-        clearScreen(CLEAR_COLOR);
+        ya2d_start_drawing();
+        ya2d_clear_screen(CLEAR_COLOR);
         
-        blitAlphaImageToScreen(0, 0, 480, 272, background, 0, 0);
-        blitAlphaImageToScreen(0, 0, icon->imageWidth, icon->imageHeight, icon, 0, 272-icon->imageHeight);
+        ya2d_draw_texture(background, 0, 0);
+        ya2d_draw_texture(icon, 0, 272-icon->height);
 
-        if (options != NULL && nopts > 0)
-            drawMenu();
+        drawMenu();
 
-        flipScreen();
-        sceDisplayWaitVblankStart();
+        ya2d_finish_drawing();
+        ya2d_swapbuffers();
+        tinyFontSwapBuffers();
     }
 
     return 0;
 }
 
 void loadGraphics(int argc, char** argv){
-    initGraphics();
-
     PBPHeader header;
     
     int fd = sceIoOpen(argv[0], PSP_O_RDONLY, 0777);
     sceIoRead(fd, &header, sizeof(PBPHeader));
     sceIoClose(fd);
     
-    background = loadImage(argv[0], header.pic1_offset);
-    icon = loadImage(argv[0], header.icon0_offset);
+    ya2d_init();
+    ya2d_set_vsync(1);
+    background = ya2d_load_PNG_file_offset(argv[0], YA2D_PLACE_VRAM, header.pic1_offset);
+    icon = ya2d_load_PNG_file_offset(argv[0], YA2D_PLACE_VRAM, header.icon0_offset);
 
     SceUID thid = sceKernelCreateThread("draw_thread", &drawthread, 0x10, 0x20000, PSP_THREAD_ATTR_USER|PSP_THREAD_ATTR_VFPU, NULL);
     if (thid >= 0){

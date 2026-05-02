@@ -53,6 +53,7 @@ msipl:
 	$(Q)mkdir -p dist/CustomIPL/
 	$(PY) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL.ARK package.txt -s
 	$(Q)cp Installer/EBOOT.PBP dist/CustomIPL/
+	$(Q)cp Resources/LIBS/*.prx dist/CustomIPL/
 
 clean:
 	$(Q)$(MAKE) -C Payloadex/Nand clean
