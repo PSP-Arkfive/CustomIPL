@@ -36,7 +36,6 @@ char msg[256];
 int msg_type = INFO_MSG;
 int msg_colors[] = { GREEN_COLOR, YELLOW_COLOR, RED_COLOR };
 
-extern u8 msx[];
 
 void setInfoMsg(int type, char* txt){
     msg_type = type;
