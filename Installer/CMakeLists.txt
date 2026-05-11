@@ -3,11 +3,15 @@ add_executable(cipl_flasher)
 target_sources(cipl_flasher PRIVATE main.c flasher.c)
 target_compile_options(cipl_flasher PRIVATE -O2 -G0 -Wall -fshort-wchar)
 target_link_libraries(cipl_flasher PRIVATE
-   mini2d
+   ya2d
+   tinyfont
    png
    z
+   pspmath
+   pspvram
    pspgu
    pspgum
+   pspjpeg
    psppower
    pspkubridge
    pspsystemctrl_user
