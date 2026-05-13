@@ -1,19 +1,28 @@
+#include <errno.h>
+#include <sys/socket.h>
 #include <pspsdk.h>
+#include <pspkernel.h>
 #include <pspdisplay.h>
 #include <pspgu.h>
 #include <psppower.h>
+#include <pspiofilemgr.h>
 
 #include <systemctrl_ark.h>
 #include <rebootexconfig.h>
-#include <libpspexploit.h>
 #include <ya2d.h>
 #include <tinyfont.h>
-//#include <mini2d.h>
 
 #include "main.h"
 
 PSP_MODULE_INFO("ARK cIPL Flasher", 0x0800, 2, 0); 
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_VSH);
+
+PSP_DISABLE_NEWLIB();
+PSP_DISABLE_NEWLIB_PIPE_SUPPORT();
+PSP_DISABLE_NEWLIB_SOCKET_SUPPORT();
+PSP_DISABLE_NEWLIB_TIMEZONE_SUPPORT();
+PSP_DISABLE_NEWLIB_CWD_SUPPORT();
+PSP_DISABLE_AUTOSTART_PTHREAD();
 
 #define CLEAR_COLOR 0x00000000
 #define WHITE_COLOR 0xFFFFFFFF
