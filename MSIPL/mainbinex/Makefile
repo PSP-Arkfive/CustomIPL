@@ -10,7 +10,7 @@ all: $(TARGET)
 
 CFLAGS = -std=c99 -Wall -Os -G0 -fno-pic $(addprefix -I, $(INCDIR)) -DMSIPL
 INCDIR = $(PSPSDK)/include $(PSPSDK)/include/iplsdk
-LIBS = -lansic -L $(PSPSDK)/lib
+LIBS = -lansic -lmicrolz -L $(PSPSDK)/lib
 
 CC = psp-gcc
 LD = psp-ld
