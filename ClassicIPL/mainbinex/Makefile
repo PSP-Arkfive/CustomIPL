@@ -5,7 +5,7 @@ CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 TARGET = patch.bin
 
 INCDIR = $(PSPSDK)/include
-LIBS = -lansic -L $(PSPSDK)/lib
+LIBS = -lansic -lmicrolz -L $(PSPSDK)/lib
 
 all: $(TARGET)
 

@@ -17,6 +17,7 @@
 void (*iplDcache)(void) = NULL;
 int (*pspSysconRxDword)(u32 *param, u8 cmd) = NULL;
 void (*seedPatchReturn)(void) = NULL;
+int lzo1x_decompress(void*, int, void*, int*, void*);
 
 void seedPatch()
 {
@@ -32,7 +33,10 @@ void iplDcachePatched()
     pspSysconRxDword(keyBuf , 7);
 
     if (keyBuf[0] & SYSCON_CTRL_HOME)
-        memcpy((void *)REBOOTEX_TEXT , payloadex , size_payloadex);
+    {
+        int len = 0x20000;
+        lzo1x_decompress(payloadex, size_payloadex, (void *)REBOOTEX_TEXT, &len, (void*)0);
+    }
     else
         REDIRECT_FUNCTION(REBOOTEX_TEXT, REBOOT_TEXT);
 
