@@ -3,11 +3,11 @@ PSPSDK=$(shell psp-config --pspsdk-path)
 TARGET = cipl_flasher
 OBJS = main.o flasher.o
 
-LIBS = -lpspsdk -lansic -lya2d -ltinyfont -lpng -lz -lpspmath -lpspvram -lpspgum -lpspgu -lpsppower -lpspkubridge -lpspsystemctrl_user -larkctrl -lpspiplupdate -lpspkbootiupdate -lkpspident
+LIBS = -lya2d -ltinyfont -lpng -lz -lpspmath -lpspvram -lpspgum -lpspgu -lpsppower -lpspkubridge -lpspsystemctrl_user -larkctrl -lpspiplupdate -lpspkbootiupdate -lkpspident
 INCDIR = 
 LIBDIR = 
 
-CFLAGS = -O2 -G0 -Wall -fshort-wchar
+CFLAGS = -O2 -G0 -Wall -fshort-wchar -std=c99
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 
