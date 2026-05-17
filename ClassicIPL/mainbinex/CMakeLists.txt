@@ -5,7 +5,7 @@ target_sources(mainbinex_int INTERFACE
    ${CMAKE_CURRENT_SOURCE_DIR}/cache.c
 )
 target_compile_options(mainbinex_int INTERFACE -std=c99 -Wall -Os -G0 -fno-pic)
-target_link_libraries(mainbinex_int INTERFACE ansic)
+target_link_libraries(mainbinex_int INTERFACE ansic microlz)
 add_dependencies(mainbinex_int INTERFACE payloadex_nand payloadex_ms)
 
 add_executable(mainbinex)
