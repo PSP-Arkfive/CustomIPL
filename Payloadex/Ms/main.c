@@ -13,7 +13,7 @@
 
 ARKConfig arkconf = {
     .magic = ARK_CONFIG_MAGIC,
-    .arkpath = ARK_DC_PATH, // default path for ARK files
+    .arkpath = ARK_DC_PATH "/" DEFAULT_ARK_FOLDER, // default path for ARK files
     .exploit_id = DC_EXPLOIT_ID,
     .launcher = {0},
     .exec_mode = PSP_ORIG, // run ARK in PSP mode
