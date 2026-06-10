@@ -16,4 +16,4 @@ LDFLAGS = -nostartfiles  -T linkfile.l -fdata-sections -ffunction-sections -Wl,-
 include $(CFWSDK)/build-tools/build_ipl.mak
 
 clean:
-	$(Q)rm -f msipl_compressed.h *.bin *.dec *.o | true
+	rm -f msipl_compressed.h *.bin *.dec *.o | true

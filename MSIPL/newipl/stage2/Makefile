@@ -19,4 +19,4 @@ PSPSDK=$(shell psp-config --pspsdk-path)
 include $(CFWSDK)/build-tools/build_ipl.mak
 
 clean:
-	$(Q)rm -f *.h *.bin *.dec *.o *.lzo | true
+	rm -f *.h *.bin *.dec *.o *.lzo | true

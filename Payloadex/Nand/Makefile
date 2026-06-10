@@ -27,13 +27,13 @@ endif
 main.elf: $(C_OBJS)
 
 $(TARGET): main.elf
-	$(Q)$(STRIP) -s $<
-	$(Q)$(OBJCOPY) -O binary $< $@
-	$(Q)../../minilzo/testmini $(TARGET) payload.lzo
-	$(Q)bin2c payload.lzo payload.h payloadex
+	$(STRIP) -s $<
+	$(OBJCOPY) -O binary $< $@
+	../../minilzo/testmini $(TARGET) payload.lzo
+	bin2c payload.lzo payload.h payloadex
 	@echo GET $@
 
 clean:
-	$(Q)rm -rf *~ *.s *.o *.elf *.lzo $(TARGET) payload.h $(EXTRA_CLEAN)
+	rm -rf *~ *.s *.o *.elf *.lzo $(TARGET) payload.h $(EXTRA_CLEAN)
 
 include $(CFWSDK)/build-tools/beauty_bin.mak

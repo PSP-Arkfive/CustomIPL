@@ -28,14 +28,14 @@ $(MAINBINEX_OBJS) : %.o : $(MAINBINEXDIR)/%.c
 main.elf: $(MAINBINEX_OBJS) 
 
 $(TARGET): main.elf
-	$(Q)$(STRIP) -s $<
-	$(Q)$(OBJCOPY) -O binary $< $(TARGET)
-	$(Q)$(PYTHON) $(CFWSDK)/build-tools/ipltools/make_tm_ipl.py --input_payload $(TARGET) --payload_addr 0x040D6000 --ipl_addr 0x040EC000 --output payload.bin 
-	$(Q)bin2c payload.bin payload.h ms_ipl_payload
+	$(STRIP) -s $<
+	$(OBJCOPY) -O binary $< $(TARGET)
+	$(PYTHON) $(CFWSDK)/build-tools/ipltools/make_tm_ipl.py --input_payload $(TARGET) --payload_addr 0x040D6000 --ipl_addr 0x040EC000 --output payload.bin 
+	bin2c payload.bin payload.h ms_ipl_payload
 	@echo GET $@
 
 clean:
-	$(Q)rm -rf *~ *.s *.o *.elf patch.bin payload.bin payload.h $(TARGET) $(EXTRA_CLEAN)
+	rm -rf *~ *.s *.o *.elf patch.bin payload.bin payload.h $(TARGET) $(EXTRA_CLEAN)
 
 
 include $(CFWSDK)/build-tools/beauty_bin.mak
