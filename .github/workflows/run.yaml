@@ -53,7 +53,9 @@ jobs:
         run: make
 
       - name: Aquire LIBS
-        run: cp -r psp-dynamic-libraries/dist/LIBS Resources/
+        run: |
+          mkdir Resources/LIBS
+          cp -r psp-dynamic-libraries/dist/LIBS/{ipl_update,kbooti_update,kpspident}.prx Resources/LIBS
 
       - name: Build
         run:  make clean && make 
