@@ -32,16 +32,27 @@ jobs:
           psp-pacman -Syyu --noconfirm
           psp-pacman -S ya2d --noconfirm
 
-      - name: Checkout
-        uses: actions/checkout@v4 
-        with:
-          submodules: recursive
-
       - name: Update psp-cfw-sdk
         run: curl -OJL "https://github.com/pspdev/psp-cfw-sdk/releases/download/latest/psp-cfw-sdk.zip"
       
       - name: Extract psp-cfw-sdk
         run: sudo unzip -o psp-cfw-sdk.zip -d /
+
+      - name: Clone psp-dynamic-libraries
+        run:  git clone https://github.com/pspdev/psp-dynamic-libraries
+
+      - name: Build psp-dynamic-libraries
+        working-directory: psp-dynamic-libraries
+        run: make
+
+      - name: Checkout
+        uses: actions/checkout@v4 
+        with:
+          submodules: recursive
+
+      - name: Aquire LIBS
+        run: |
+          cp -r ../psp-dynamic-libraries/dist/LIBS Resources/
 
       - name: Build
         run:  make clean && make 
