@@ -52,39 +52,43 @@ jobs:
 
       - name: Aquire LIBS
         run: |
-          cp -r ../../psp-dynamic-libraries/dist/LIBS Resources/
+          pwd
+          ls
+          ls ..
+          ls ../..
+          #cp -r ../../psp-dynamic-libraries/dist/LIBS Resources/
 
-      - name: Build
-        run:  make clean && make 
+ #     - name: Build
+ #       run:  make clean && make 
 
-      - name: Compress
-        run: |
-          cd dist
-          zip -r ../CustomIPL.zip .
-      
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: CustomIPL-release
-          path: CustomIPL.zip
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v8
-        with:
-          name: CustomIPL-release
-          path: .
-      - name:
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: latest
-          name: CustomIPL pre-release
-          prerelease: true
-          files: CustomIPL.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ #     - name: Compress
+ #       run: |
+ #         cd dist
+ #         zip -r ../CustomIPL.zip .
+ #     
+ #     - name: Upload
+ #       uses: actions/upload-artifact@v4
+ #       with:
+ #         name: CustomIPL-release
+ #         path: CustomIPL.zip
+ # release:
+ #   needs: build
+ #   runs-on: ubuntu-latest
+ #   steps:
+ #     - name: Download artifacts
+ #       uses: actions/download-artifact@v8
+ #       with:
+ #         name: CustomIPL-release
+ #         path: .
+ #     - name:
+ #       uses: softprops/action-gh-release@v3
+ #       with:
+ #         tag_name: latest
+ #         name: CustomIPL pre-release
+ #         prerelease: true
+ #         files: CustomIPL.zip
+ #       env:
+ #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
     
