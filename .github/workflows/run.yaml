@@ -55,7 +55,10 @@ jobs:
       - name: Aquire LIBS
         run: |
           mkdir Resources/LIBS
-          cp -r psp-dynamic-libraries/dist/LIBS/{ipl_update,kbooti_update,kpspident}.prx Resources/LIBS
+          # ash must not like simplifying shit
+          cp psp-dynamic-libraries/dist/LIBS/ipl_update.prx Resources/LIBS
+          cp psp-dynamic-libraries/dist/LIBS/kbooti_update.prx Resources/LIBS
+          cp psp-dynamic-libraries/dist/LIBS/kpspident.prx Resources/LIBS
 
       - name: Build
         run:  make clean && make 
