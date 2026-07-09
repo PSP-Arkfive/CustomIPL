@@ -55,7 +55,8 @@ void ExitWithMessage(int type, int reboot, int milisecs, char *fmt, ...)
     va_list list;
     va_start(list, fmt);
     msg_type = type;
-    vsprintf(msg, fmt, list);
+    //vsprintf(msg, fmt, list);
+    vsnprintf(msg, sizeof(msg), fmt, list);
     va_end(list);
     sceKernelDelayThread(milisecs*1000);
     if (reboot)

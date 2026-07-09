@@ -474,7 +474,7 @@ void cipl_flasher()
     // check if running ARK
     memset(&ark_config, 0, sizeof(ARKConfig));
     sctrlArkGetConfig(&ark_config);
-    if (ark_config.magic != ARK_CONFIG_MAGIC){
+    if ((ark_config.magic != ARK_CONFIG_MAGIC) && devkit >= 0x06060010 && !has_dc){
         ErrorExit(5000, "Only available for ARK! Use older cIPL installer for PRO/ME compatibility.");
     }
 
@@ -482,5 +482,6 @@ void cipl_flasher()
 	    case 0: newipl_menu();     break;
 	    case 1: classicipl_menu(); break;
 	    case 2: devtoolipl_menu(); break;
+		default: newipl_menu();
     }
 }

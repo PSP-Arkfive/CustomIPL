@@ -4,6 +4,7 @@ PY = $(shell which python3)
 PSPDEV = $(shell psp-config --pspdev-path)
 CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 BUILDTOOLS = $(CFWSDK)/build-tools
+SHELL := /bin/bash
 
 all: minilzo cipl msipl
 
@@ -53,6 +54,8 @@ msipl:
 	mkdir -p dist/CustomIPL/
 	$(PY) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL.ARK package.txt -s
 	cp Installer/EBOOT.PBP dist/CustomIPL/
+	$(shell for i in Resources/LIBS/*.prx; do $(BUILDTOOLS)/gz/pspungz.py "$$i" "Resources/LIBS/$$i.decompressed" 2>/dev/null; done)
+	$(shell for i in Resources/LIBS/*.new; do mv "$$i" "dist/CustomIPL/$${i:0:-13}" ; done)
 	cp Resources/LIBS/*.prx dist/CustomIPL/
 
 clean:
