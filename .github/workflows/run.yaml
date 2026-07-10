@@ -56,9 +56,9 @@ jobs:
         run: |
           mkdir Resources/LIBS
           # ash must not like simplifying shit
-          cp psp-dynamic-libraries/dist/LIBS/ipl_update.prx Resources/LIBS
-          cp psp-dynamic-libraries/dist/LIBS/kbooti_update.prx Resources/LIBS
-          cp psp-dynamic-libraries/dist/LIBS/kpspident.prx Resources/LIBS
+          cp psp-dynamic-libraries/IPL_Updater/ipl_update.prx Resources/LIBS
+          cp psp-dynamic-libraries/KBooti_Updater/kbooti_update.prx Resources/LIBS
+          cp psp-dynamic-libraries/PSPIdentHelper/kpspident.prx Resources/LIBS
 
       - name: Build
         run:  make clean && make 
