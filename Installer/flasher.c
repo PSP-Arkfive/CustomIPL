@@ -308,11 +308,14 @@ void newipl_menu(){
         "X - Install cIPL",
         "O - Revert to original IPL",
         "/\\ - Cancel and Exit",
-        "LT - switch to Classic cIPL",
+    };
+    static char* menuoptAlt[] = {
+        "X - Install cIPL",
+        "/\\ - Cancel and Exit",
     };
     cipl_type = "New cIPL";
-    options = menuopts;
-    nopts = NELEMS(menuopts)-1; // hide LT option by default
+    options = (devkit < 0x06060010) ? menuoptAlt :menuopts;
+    nopts = (devkit < 0x06060010) ? NELEMS(menuoptAlt) : NELEMS(menuopts);
 
     size_t size = NEW_CIPL_SIZE;
     u16 ipl_key = 0;
@@ -360,11 +363,6 @@ void newipl_menu(){
 
     loadIplUpdateModule();
 
-    if (model < 2 && !is_ta88v3()) {
-	    // allow classic install;
-	    nopts++;
-    }
-
     SceCtrlData pad;
     while (1) {
         sceCtrlReadBufferPositive(&pad, 1);
@@ -390,7 +388,7 @@ void newipl_menu(){
         	setInfoMsg(INFO_MSG, "Done.");
         	break; 
         }
-        else if (pad.Buttons & PSP_CTRL_CIRCLE) {
+        else if ((pad.Buttons & PSP_CTRL_CIRCLE) && devkit >= 0x06060010) {
         	setInfoMsg(INFO_MSG, "Flashing Original IPL...");
 
         	size = ORIG_IPL_SIZE;
