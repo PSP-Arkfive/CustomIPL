@@ -46,4 +46,4 @@ ipl_660:
 	$(MAKE) PSP_MODEL=11G PSP_FW=660 PSP_CFW=LME -C $(CIPL_ROOT)/MSIPL/newipl/stage3/
 	mv $(CIPL_ROOT)/MSIPL/newipl/stage3/ipl_11G.bin $(CIPL_ROOT)/MSIPL/newipl/msipl_11g.bin
 # pkg
-	cd $(CIPL_ROOT) && $(PYTHON) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL660.LME Package/pkg_lme_660.txt -s
+	cd $(CIPL_ROOT) && $(PYTHON) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL660.LME Build/pkg_660.txt -s

@@ -47,4 +47,4 @@ ipl_660:
 	$(MAKE) PSP_MODEL=11G PSP_FW=660 PSP_CFW=ARK -C $(CIPL_ROOT)/MSIPL/newipl/stage3/
 	mv $(CIPL_ROOT)/MSIPL/newipl/stage3/ipl_11G.bin $(CIPL_ROOT)/MSIPL/newipl/msipl_11g.bin
 # pkg
-	cd $(CIPL_ROOT) && $(PYTHON) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL.ARK Package/pkg_ark.txt -s
+	cd $(CIPL_ROOT) && $(PYTHON) $(BUILDTOOLS)/pack/pack.py -p dist/CustomIPL/CIPL.ARK Build/pkg_ark.txt -s

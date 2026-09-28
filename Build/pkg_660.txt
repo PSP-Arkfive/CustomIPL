@@ -1,4 +1,3 @@
-msipl.old,MSIPL/mainbinex/payload.bin
 msipl.bin,MSIPL/newipl/stage1/ipl.bin
 msipl.raw,MSIPL/newipl/stage2/msipl.bin
 msipl_01g.bin,MSIPL/newipl/msipl_01g.bin
@@ -9,11 +8,6 @@ msipl_05g.bin,MSIPL/newipl/msipl_05g.bin
 msipl_07g.bin,MSIPL/newipl/msipl_07g.bin
 msipl_09g.bin,MSIPL/newipl/msipl_09g.bin
 msipl_11g.bin,MSIPL/newipl/msipl_11g.bin
-tm_mloader.bin,Resources/tm_mloader.bin
-tm_msipl_legacy.bin,Resources/tm_msipl_legacy.bin
-ipl_classic_01g.bin,ClassicIPL/combine/ipl_block_01g.bin
-ipl_classic_02g.bin,ClassicIPL/combine/ipl_block_02g.bin
-kbooti_ipl_01g.bin,ClassicIPL/combine/kbooti_ipl_block_01g.bin
 cipl_01g.bin,NewIPL/cipl_01G.bin
 cipl_02g.bin,NewIPL/cipl_02G.bin
 cipl_03g.bin,NewIPL/cipl_03G.bin
