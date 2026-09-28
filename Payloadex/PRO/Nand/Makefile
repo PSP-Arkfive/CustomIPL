@@ -1,0 +1,39 @@
+PSPSDK = $(shell psp-config --pspsdk-path)
+PSPDEV = $(shell psp-config --pspdev-path)
+PYTHON = $(shell which python3)
+CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
+
+TARGET = reboot.bin
+
+all: $(TARGET)
+
+C_OBJS = main.o
+
+CC = psp-gcc
+LD = psp-ld
+STRIP = psp-strip
+OBJCOPY = psp-objcopy
+LINKFILE = $(CFWSDK)/build-tools/bootloadex.l
+INCDIR = $(PSPSDK)/include $(PSPSDK)/include/iplsdk
+CFLAGS = -std=c99 -Wall -Os -G0 -fno-pic $(addprefix -I, $(INCDIR))
+LIBS = -L $(PSPSDK)/lib -lbootloadex -liplsdk -lansic
+
+
+ifdef DEBUG
+CFLAGS += -DDEBUG=$(DEBUG)
+LIBS += -lcolordebugger
+endif
+
+main.elf: $(C_OBJS)
+
+$(TARGET): main.elf
+	$(STRIP) -s $<
+	$(OBJCOPY) -O binary $< $@
+	../../../minilzo/testmini $(TARGET) payload.lzo
+	bin2c payload.lzo payload.h payloadex
+	@echo GET $@
+
+clean:
+	rm -rf *~ *.s *.o *.elf *.lzo $(TARGET) payload.h $(EXTRA_CLEAN)
+
+include $(CFWSDK)/build-tools/beauty_bin.mak
