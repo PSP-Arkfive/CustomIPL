@@ -4,9 +4,9 @@
 #include "gpio.h"
 
 #ifdef MSIPL
-#include "../../Payloadex/Ms/payload.h"
+#include "Ms/payload.h"
 #else
-#include "../../Payloadex/Nand/payload.h"
+#include "Nand/payload.h"
 #endif
 
 void Dcache();

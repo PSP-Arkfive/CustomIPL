@@ -20,7 +20,7 @@ endif
 
 
 all:
-	$(MAKE) -C ipl_stage2_payload BFLAGS="-DIPL_$(PSP_MODEL) -DPSP_MODEL=$(PSP_MODEL)"
+	$(MAKE) PSP_CFW=$(PSP_CFW) -C ipl_stage2_payload BFLAGS="-DIPL_$(PSP_MODEL) -DPSP_MODEL=$(PSP_MODEL)"
 	$(MAKE) -C ipl_stage1_payload BFLAGS="-DIPL_$(PSP_MODEL) -DPSP_MODEL=$(PSP_MODEL)"
 	$(PYTHON) $(CFWSDK)/build-tools/ipltools/unpack_ipl.py $(RESOURCES)/nandipl_$(PSP_MODEL).bin ipl_$(PSP_MODEL).dec $(XOR_VAL)
 	dd if=ipl_stage1_payload/ipl_stage1_payload.bin of=ipl_$(PSP_MODEL).bin

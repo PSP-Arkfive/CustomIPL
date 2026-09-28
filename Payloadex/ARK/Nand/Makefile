@@ -29,7 +29,7 @@ main.elf: $(C_OBJS)
 $(TARGET): main.elf
 	$(STRIP) -s $<
 	$(OBJCOPY) -O binary $< $@
-	../../minilzo/testmini $(TARGET) payload.lzo
+	../../../minilzo/testmini $(TARGET) payload.lzo
 	bin2c payload.lzo payload.h payloadex
 	@echo GET $@
 

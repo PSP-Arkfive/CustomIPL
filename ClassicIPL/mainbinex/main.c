@@ -8,9 +8,9 @@
 #include "cache.h"
 #include "seedkey.h"
 #ifndef MSIPL
-#include "../../Payloadex/Nand/payload.h"
+#include "../../Payloadex/ARK/Nand/payload.h"
 #else
-#include "../../Payloadex/Ms/payload.h"
+#include "../../Payloadex/ARK/Ms/payload.h"
 #endif
 #define SYSCON_CTRL_HOME 0x00001000
 
