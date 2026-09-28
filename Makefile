@@ -5,15 +5,19 @@ PSPDEV = $(shell psp-config --pspdev-path)
 CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
 BUILDTOOLS = $(CFWSDK)/build-tools
 SHELL := /bin/bash
+CIPL_ROOT = $(CURDIR)
 
-all: minilzo build_ipl_ark build_ipl_pro_660 build_ipl_lme_660
+all: minilzo
+	mkdir -p dist/CustomIPL/
+	$(MAKE) CIPL_ROOT=$(CIPL_ROOT) -C Build/ARK
+	$(MAKE) CIPL_ROOT=$(CIPL_ROOT) -C Build/PRO
+	$(MAKE) CIPL_ROOT=$(CIPL_ROOT) -C Build/LME
+	$(MAKE) -C Installer
+	cp Installer/EBOOT.PBP dist/CustomIPL/
+#	cp Resources/LIBS/*.prx dist/CustomIPL/
 
 minilzo:
 	$(MAKE) gcc -C minilzo
-
-include Build/ARK.mak
-include Build/PRO660.mak
-include Build/LME660.mak
 
 clean:
 	$(MAKE) -C Payloadex/ARK/Nand clean

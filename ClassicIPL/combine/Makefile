@@ -1,7 +1,7 @@
-PSPSDK=$(shell psp-config --pspsdk-path)
+PSPSDK = $(shell psp-config --pspsdk-path)
 PSPDEV = $(shell psp-config --pspdev-path)
 CFWSDK = $(PSPDEV)/share/psp-cfw-sdk
-PYTHON=$(shell which python3)
+PYTHON = $(shell which python3)
 
 MODULE_PATH = ..
 RESOURCES ?= ../../Resources
