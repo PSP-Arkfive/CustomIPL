@@ -1,25 +1,23 @@
-PSPSDK=$(shell psp-config --pspsdk-path)
-
 TARGET = cipl_flasher
 OBJS = main.o flasher.o
 
-LIBS = -lpspsdk -lpspminicrt -lansic -lya2d -ltinyfont -lpng -lz -lpspmath -lpspvram -lpspmalloc -lpspgum -lpspgu -lpsppower -lpspkubridge -lpspsystemctrl_user -larkctrl -lpspiplupdate -lpspkbootiupdate -lkpspident
-INCDIR = 
-LIBDIR = 
+UNAME := $(shell uname)
 
-CFLAGS = -O2 -G0 -Wall -fshort-wchar -std=c99
+CFLAGS = -O2 -Os -G0 -Wall -std=c99
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 LDFLAGS = -nostartfiles
 
+BUILD_PRX = 1
+ENCRYPT = 1
+
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = ARK cIPL Flasher
+PSP_EBOOT_TITLE = cIPL Flasher
 PSP_EBOOT_ICON = res/icon0.png
 PSP_EBOOT_PIC1 = res/pic1.png
-PSP_FW_VERSION = 660
-BUILD_PRX = 1
 
-all: $(TARGET).prx
+LIBDIR = 
+LIBS = -lpspminicrt -lya2d -ltinyfont -lpng -lz -lpspmath -lpspvram -lpspgum -lpspgu -lpspsdk -lpsppower -lpspkubridge -lpspsystemctrl_user -larkctrl -lpspiplupdate -lpspkbootiupdate -lkpspident
 
-
+PSPSDK = $(shell psp-config --pspsdk-path)
 include $(PSPSDK)/lib/build.mak
