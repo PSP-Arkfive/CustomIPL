@@ -19,7 +19,6 @@ BootLoadExConfig bleconf = {
         .BtcnfPathHandler = &BtcnfPathHandlerLME,
     },
     .extraPRXDecrypt = &LMEPRXDecrypt,
-    .extraCheckExecFile = &LMECheckExec,
     .UnpackBootConfig = &UnpackBootConfigLMEPSP,
 };
 

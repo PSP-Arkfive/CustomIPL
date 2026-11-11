@@ -23,5 +23,4 @@ function(add_payloadex TYPE HEADER_OUTPUT_DIR)
 
 endfunction()
 
-add_subdirectory(Ms)
 add_subdirectory(Nand)
