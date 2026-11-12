@@ -63,34 +63,21 @@ int findPkgFile(void** buffer, size_t* size, const char* path){
 // Returns: 0 = ARK, 1 = PRO, 2 = LME, -1 = unknown
 int DetectCFWType(int devkit)
 {
-    // Check for ARK first using ARK config
-    ARKConfig test_ark_config;
-    memset(&test_ark_config, 0, sizeof(ARKConfig));
-    if (sctrlArkGetConfig(&test_ark_config) == 0 && test_ark_config.magic == ARK_CONFIG_MAGIC) {
-        return 0; // ARK
-    }
+    SEConfig se_config;
+    memset(&se_config, 0, sizeof(SEConfig));
     
-    // For 6.60/6.61 firmware, try to detect PRO or LME using SEConfig
-    if (devkit == 0x06060010 || devkit == 0x06060110) {
-        SEConfig se_config;
-        memset(&se_config, 0, sizeof(SEConfig));
-        
-        if (sctrlSEGetConfig(&se_config) == 0) {
-            // Check for LME first (magic is fixed)
-            #define SECONFIG_MAGIC_LME 0x4143454D
-            if (se_config.lme.magic == SECONFIG_MAGIC_LME) {
-                return 2; // LME
-            }
-            
-            // Check for PRO (magic depends on version)
-            #define SECONFIG_MAGIC_PRO_CALC \
-                ((((sctrlHENGetVersion() & 0xF) << 16) | sctrlHENGetMinorVersion()) + 0x47434554)
-            if (se_config.pro.magic == SECONFIG_MAGIC_PRO_CALC) {
-                return 1; // PRO
-            }
+    if (sctrlSEGetConfig(&se_config) == 0) {
+        if (se_config.ark.magic == ARK_CONFIG_MAGIC) {
+            return 0; // ARK
+        }
+        if (se_config.lme.magic == SECONFIG_MAGIC_LME) {
+            return 2; // LME
+        }
+        // Check for PRO (magic depends on version)
+        if (se_config.pro.magic == SECONFIG_MAGIC_PRO) {
+            return 1; // PRO
         }
     }
-    
     return -1; // Unknown
 }
 
@@ -98,7 +85,7 @@ int DetectCFWType(int devkit)
 const char* SelectPackageName(int cfw_type, int devkit)
 {
     // For 6.60 or 6.61 firmware with PRO or LME, use the specific package
-    if ((devkit == 0x06060010 || devkit == 0x06060110)) {
+    if ((devkit == FW_660 || devkit == FW_661)) {
         if (cfw_type == 1) {
             return "CIPL660.PRO";
         } else if (cfw_type == 2) {
@@ -499,7 +486,7 @@ void cipl_flasher()
     }
 
     // check if running 6.60 or 6.61
-    if(devkit != 0x06060010 && devkit != 0x06060110) {
+    if(devkit != FW_660 && devkit != FW_661) {
         if(!has_dc) {
             ErrorExit(5000,"DCARK MISSING, INSTALL IT FIRST!");
         }
