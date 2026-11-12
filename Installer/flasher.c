@@ -40,7 +40,7 @@ static u8 big_buf[256*1024] __attribute__((aligned(64)));
 void* pkg_data = NULL;
 size_t pkg_size = 0;
 
-int devkit, baryon_ver;
+u32 devkit, baryon_ver, tachyon_ver;
 
 
 int findPkgFile(void** buffer, size_t* size, const char* path){
@@ -509,16 +509,16 @@ void cipl_flasher()
     }
 
     model = kuKernelGetModel();
-    if(model<0) {
-	    u32 tachyon = sceSysregGetTachyonVersion();
-	    if(tachyon > 0x00400000 && baryon_ver <= 0x00243000)
+	tachyon_ver = sceSysregGetTachyonVersion();
+    if (sceSysconGetBaryonVersion(&baryon_ver) < 0) {
+        ErrorExit(5000, "Could not determine baryon version!");
+    }
+
+    if (model<0) {
+	    if (tachyon_ver > 0x00400000 && baryon_ver <= 0x00243000)
               model = 1; // Fix for lower firmwares that do not support kubridge, and are not Phats
 	    else
 	    	model = 0; // Fix for lower firmwares that do not support kubridge
-    }
-
-    if (sceSysconGetBaryonVersion(&baryon_ver) < 0) {
-        ErrorExit(5000, "Could not determine baryon version!");
     }
 
     switch (sctrlHENIsToolKit()) {
