@@ -12,6 +12,7 @@
 #include <systemctrl_ark.h>
 #include <cfwmacros.h>
 #include <systemctrl.h>
+#include <systemctrl_se.h>
 #include <kubridge.h>
 #include <pspipl_update.h>
 #include <kbooti_update.h>
@@ -58,9 +59,60 @@ int findPkgFile(void** buffer, size_t* size, const char* path){
     return -1;
 }
 
-int ReadPkgFile()
+// Detect CFW type (ARK, PRO, or LME) using SEConfig
+// Returns: 0 = ARK, 1 = PRO, 2 = LME, -1 = unknown
+int DetectCFWType(int devkit)
 {
-    SceUID fd = sceIoOpen("CIPL.ARK", PSP_O_RDONLY, 0);
+    // Check for ARK first using ARK config
+    ARKConfig test_ark_config;
+    memset(&test_ark_config, 0, sizeof(ARKConfig));
+    if (sctrlArkGetConfig(&test_ark_config) == 0 && test_ark_config.magic == ARK_CONFIG_MAGIC) {
+        return 0; // ARK
+    }
+    
+    // For 6.60/6.61 firmware, try to detect PRO or LME using SEConfig
+    if (devkit == 0x06060010 || devkit == 0x06060110) {
+        SEConfig se_config;
+        memset(&se_config, 0, sizeof(SEConfig));
+        
+        if (sctrlSEGetConfig(&se_config) == 0) {
+            // Check for LME first (magic is fixed)
+            #define SECONFIG_MAGIC_LME 0x4143454D
+            if (se_config.lme.magic == SECONFIG_MAGIC_LME) {
+                return 2; // LME
+            }
+            
+            // Check for PRO (magic depends on version)
+            #define SECONFIG_MAGIC_PRO_CALC \
+                ((((sctrlHENGetVersion() & 0xF) << 16) | sctrlHENGetMinorVersion()) + 0x47434554)
+            if (se_config.pro.magic == SECONFIG_MAGIC_PRO_CALC) {
+                return 1; // PRO
+            }
+        }
+    }
+    
+    return -1; // Unknown
+}
+
+// Select the appropriate package file based on detected CFW
+const char* SelectPackageName(int cfw_type, int devkit)
+{
+    // For 6.60 or 6.61 firmware with PRO or LME, use the specific package
+    if ((devkit == 0x06060010 || devkit == 0x06060110)) {
+        if (cfw_type == 1) {
+            return "CIPL660.PRO";
+        } else if (cfw_type == 2) {
+            return "CIPL660.LME";
+        }
+    }
+    
+    // Default to universal ARK package
+    return "CIPL.ARK";
+}
+
+int ReadPkgFile(const char* pkg_filename)
+{
+    SceUID fd = sceIoOpen(pkg_filename, PSP_O_RDONLY, 0);
     if (fd < 0)
         return fd;
 
@@ -428,9 +480,22 @@ void cipl_flasher()
     SceIoStat dc_stat;
     int has_dc = sceIoGetstat("ms0:/TM/DCARK/msipl.raw", &dc_stat)>=0;
 
+    // Detect CFW type and select appropriate package
+    int cfw_type = DetectCFWType(devkit);
+    const char* pkg_filename = SelectPackageName(cfw_type, devkit);
+
     int res = 0;
-    if ((res=ReadPkgFile())<0){
-        ErrorExit(5000, "Failed to read CIPL.ARK package: %d (%p)", res, res);
+    if ((res=ReadPkgFile(pkg_filename))<0){
+        // If the specific package not found, try fallback to CIPL.ARK
+        if (strcmp(pkg_filename, "CIPL.ARK") != 0) {
+            setInfoMsg(WARNING_MSG, "Specific package not found, using CIPL.ARK");
+            sceKernelDelayThread(2*1000*1000);
+            if ((res=ReadPkgFile("CIPL.ARK"))<0){
+                ErrorExit(5000, "Failed to read CIPL.ARK package: %d (%p)", res, res);
+            }
+        } else {
+            ErrorExit(5000, "Failed to read %s package: %d (%p)", pkg_filename, res, res);
+        }
     }
 
     // check if running 6.60 or 6.61
@@ -467,13 +532,6 @@ void cipl_flasher()
 
     if (sceSysconGetBaryonVersion(&baryon_ver) < 0) {
         ErrorExit(5000, "Could not determine baryon version!");
-    }
-
-    // check if running ARK
-    memset(&ark_config, 0, sizeof(ARKConfig));
-    sctrlArkGetConfig(&ark_config);
-    if ((ark_config.magic != ARK_CONFIG_MAGIC) && devkit >= 0x06060010 && !has_dc){
-        ErrorExit(5000, "Only available for ARK! Use older cIPL installer for PRO/ME compatibility.");
     }
 
     switch (sctrlHENIsToolKit()) {
