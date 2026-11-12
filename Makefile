@@ -23,9 +23,7 @@ clean:
 	$(MAKE) -C Payloadex/ARK/Nand clean
 	$(MAKE) -C Payloadex/ARK/Ms clean
 	$(MAKE) -C Payloadex/PRO/Nand clean
-	$(MAKE) -C Payloadex/PRO/Ms clean
 	$(MAKE) -C Payloadex/LME/Nand clean
-	$(MAKE) -C Payloadex/LME/Ms clean
 	$(MAKE) -C NewIPL clean
 	$(MAKE) -C ClassicIPL/mainbinex clean
 	$(MAKE) -C ClassicIPL/combine clean
