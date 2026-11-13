@@ -40,7 +40,7 @@ static u8 big_buf[256*1024] __attribute__((aligned(64)));
 void* pkg_data = NULL;
 size_t pkg_size = 0;
 
-u32 devkit, baryon_ver, tachyon_ver;
+int devkit, baryon_ver, tachyon_ver;
 
 
 int findPkgFile(void** buffer, size_t* size, const char* path){
