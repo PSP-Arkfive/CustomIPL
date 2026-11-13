@@ -31,7 +31,7 @@ jobs:
 
       - name: Update psp-cfw-sdk
         run: |
-          git clone -b bootloadex_tmhlpr --single-branch https://github.com/pspdev/psp-cfw-sdk.git
+          git clone --depth=1 https://github.com/pspdev/psp-cfw-sdk.git
           cd psp-cfw-sdk
           make
           make install
