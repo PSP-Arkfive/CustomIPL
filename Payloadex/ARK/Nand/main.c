@@ -29,6 +29,7 @@ BootLoadExConfig bleconf = {
     .UnpackBootConfig = &UnpackBootConfigArkPSP,
 };
 
+static ARKConfig* ark_config = (ARKConfig*)ARK_CONFIG;
 
 // Entry Point
 int cfwBoot(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7)
